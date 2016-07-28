@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load cropping %}
+{% load cropping thumbnail %}
+
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class='row'>
+
+	<div class='col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2'>
+
+		<!-- Panel -->
+		<div class="panel panel-default">
+
+			<!-- Panel Body -->
+			<div class="panel-body">
+
+
+
+
+				<div class="profile-edit-content">
+
+					<h2>Profile Photo</h2>
+
+					<br/>
+
+
+
+					<form method='POST' action='' enctype="multipart/form-data">{% csrf_token %}
+
+						{{ form|crispy }}
+
+						<br>
+
+						{% if profile.image and not form.errors %}
+
+							<input class='btn btn-match btn-lg' type='submit' value='Update Photo' />
+
+							<br>
+							<br>
+
+							<div class="photo-save">
+								
+								<a href="{% url 'settings' %}"><button class="btn btn-block btn-match btn-lg" type="button"><i class="fa fa-camera" aria-hidden="true"></i> Save Photo
+								</button></a>
+							
+							</div>
+
+						{% else %}
+
+							<input class='btn btn-match btn-lg' type='submit' value='Upload Photo' />
+
+						{% endif %}
+
+
+					</form>
+
+
+
+
+				</div><!-- Content End -->
+
+
+
+			</div><!-- Panel Body End -->
+
+		</div><!-- Panel End -->
+
+	</div><!-- Col End -->
+
+
+</div><!-- Row End -->
+
+
+
+
+{% endblock %}

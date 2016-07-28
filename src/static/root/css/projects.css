@@ -1,0 +1,178 @@
+/* Project */
+
+
+
+
+.projects-content {
+    padding-top: 80px;
+    min-height: 700px;
+}
+
+.projects-header {
+    margin-bottom: 40px;
+}
+
+.projects-item { 
+    margin-top: 20px;
+}
+
+
+.project-list-icon {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.projects-list-title {
+    vertical-align: middle;
+    font-size: 30px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    color: #555555;
+}
+
+
+.projects-list-timesince {
+    font-size: 14px;
+    color: #999999;
+}
+
+
+.project-title {
+    font-size: 36px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    color: #555555;
+    padding: 10px 0px 10px 0px;
+}
+
+.project-icon {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+.project-content {
+    padding: 20px 20px 20px 40px;
+
+}
+
+
+
+
+
+.project-audio {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+
+.project-description {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.project-buttons {
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+
+.project-morefeedback{
+    padding: 40px 0px 20px 0px;
+}
+
+
+.project-searching {
+    font-size: 24px;
+    color: #BDBFC1;
+    padding: 10px 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.project-waiting {
+    font-size: 20px;
+    color: #BDBFC1;
+    padding: 10px 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+.project-edit-content {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.project-button {
+    display: inline;
+}
+
+.project-private {
+    padding-top: 30px;
+    padding-left: 0px;
+}
+
+
+.project-feedback-container {
+    margin-top: 30px;
+
+}
+
+
+.project-feedback-header {
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+
+.project-feedback-item {
+    padding-bottom: 20px;
+}
+
+
+.project-feedback-user {
+    font-size: 16px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.project-feedback-user-img {
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+
+}
+
+
+.project-feedback-icon {
+    margin-bottom: 10px;
+    
+}
+
+.project-feedback-icon-header {
+    margin-bottom: 20px;
+    font-size: 18px;
+
+}
+
+
+.project-feedback-content {
+
+}
+
+
+.project-feedback-text {
+    margin-top: 0px;
+    margin-bottom: 30px;
+    color: #777777;
+    line-height: 1.5;
+}
+
+.project-waiting {
+    margin-top: 20px;
+}
+
+
+

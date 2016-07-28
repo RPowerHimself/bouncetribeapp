@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-9 col-md-9">
+
+		<div class="panel panel-default">
+		  
+			<div class="panel-body">
+
+
+				<div class="project-content">
+
+
+					<div class="project-title">
+
+						{{ instance.name }}
+
+					</div>
+
+					<br>
+	
+					<p>Are you sure you want to permanently delete this Subtribe?</p> 
+
+					<br>
+
+
+					<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+
+						<button name="delete" class="btn btn-gray-sm" type="submit">
+
+							<i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+						
+						</button>
+
+					</form>
+
+					<br>
+
+
+				</div><!-- Project Content End -->
+
+
+			</div><!-- Panel-Body End -->
+		  
+		</div><!-- Panel End -->
+
+	</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+
+{% endblock %}
+

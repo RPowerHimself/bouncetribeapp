@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load cropping %}
+{% load cropping thumbnail %}
+
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class='row'>
+
+	<div class='col-xs-12 col-sm-10 col-md-10'>
+
+
+
+		<!-- Panel -->
+		<div class="panel panel-default">
+
+
+			<!-- Panel Body -->
+			<div class="panel-body">
+
+
+
+
+				<div class="profile-edit-content">
+
+
+
+
+						<div class="profile-edit-photo">
+
+							{% if profile.image %}
+								<a href="{% url 'profile_photo' %}"><img src ='{{ profile.get_thumbnail }}' class ='img-responsive img-circle profile-edit-photo-content'/></a>
+							
+							{% else %}
+								<a href="{% url 'profile_photo' %}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle profile-edit-photo-content'/></a>
+
+							{% endif %}
+
+						</div><!-- End Profile-Edit-Photo -->
+
+
+
+						<div class="profile-edit-photo-btn">
+
+							{% if profile.image %}
+								<a href="{% url 'profile_photo' %}"><button class="btn btn-match btn-lg" type="button"><i class="fa fa-camera" aria-hidden="true"></i> Edit Photo
+								</button></a>
+
+							{% else %}
+								<a href="{% url 'profile_photo' %}"><button class="btn btn-match btn-lg" type="button"><i class="fa fa-camera" aria-hidden="true"></i> Add Photo
+								</button></a>
+
+							{% endif %}
+
+						</div><!-- End Profile-Edit-Photo-Btn -->
+
+
+
+
+
+
+
+
+					<form method='POST' action='' enctype="multipart/form-data">{% csrf_token %}
+
+					<!-- {{ form|crispy }}
+								<br/> -->
+
+
+						{% if form.errors %}
+					    		
+					    	{% for field in form %}
+					        	
+					        	{% for error in field.errors %}
+					            
+					            	<div class="form-error">
+
+					            		<strong>{{ error|escape }}</strong>
+
+					            	</div>
+
+					        	{% endfor %}
+					    	
+					    	{% endfor %}
+
+
+
+					    	{% for error in form.non_field_errors %}
+					        	<div><strong>{{ error|escape }}</strong></div>
+					    	
+					    	{% endfor %}
+								
+						{% endif %}
+
+								{% if projects_count > 0 %}
+
+									<label><i class="fa fa-music" aria-hidden="true"></i> Select Your Featured Track</label>
+									{{ form.featured_project }}
+									<br>
+									<br>
+								
+								{% endif %}
+
+
+								<label>Your Experience Level</label>
+								{{ form.experience }}
+								</br>
+								</br>
+
+
+							
+
+								<label><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Location</label>
+								{{ form.location }}
+								</br>
+								</br>
+
+								<label><i class="fa fa-user" aria-hidden="true"></i> Your Summary</label>
+								{{ form.bio }}
+								</br>
+								</br>
+
+								<label><i class="fa fa-music" aria-hidden="true"></i> Your Influences</label>
+								{{ form.influences }}
+								</br>
+								</br>
+
+
+								<label><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+								{{ form.email }}
+								</br>
+								</br>
+
+
+								<label><i class="fa fa-link" aria-hidden="true"></i> Website</label>
+								{{ form.website }}
+								</br>
+
+
+
+								</br>
+								</br>
+
+
+
+						<input class='btn btn-block btn-match btn-lg' type='submit' value='Save Changes' />
+
+
+					</form>
+
+
+
+
+
+
+				</div><!-- Profile-Edit-Content End -->
+
+
+
+			</div><!-- Panel Body End -->
+		
+		</div><!-- Panel End -->
+	
+	</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+
+{% endblock %}

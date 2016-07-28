@@ -1,0 +1,234 @@
+/* Profile */
+
+
+.profile-container {
+    min-height: 700px;
+}
+
+
+.profile-header {
+
+    margin: 40px 40px 30px 50px;
+
+}
+
+
+.profile-img {
+
+    height: 150px;
+    width: 150px;
+    margin-right: 40px;
+    text-align: center;
+
+}
+
+
+.profile-header-content {
+
+
+}
+
+
+.profile-name {
+    font-size: 46px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    color: #555555;
+    padding: 10px 0px 10px 0px;
+}
+
+
+.profile-location {
+    color: #777777;
+}
+
+.profile-experience{
+
+    padding-bottom: 20px;
+
+}
+
+.profile-stats {
+
+}
+
+
+
+.profile-friend-request {
+    margin-top: 100px;
+
+}
+
+
+
+
+.profile-body {
+    margin-top: 70px;
+    margin-bottom: 0px;
+
+}
+
+
+.profile-body-left {
+
+    padding-left: 60px;
+
+}
+
+
+
+.profile-bio {
+
+    margin-bottom: 70px;
+
+}
+
+
+.profile-icon-user {
+    color: #ACCE6C;
+
+}
+
+
+.profile-influences{
+    
+    margin-bottom: 70px;
+    
+}
+
+
+.profile-icon-heart {
+    color: #f26c61;
+
+}
+
+
+.profile-recent-projects {
+
+    padding-top: 10px;
+    padding-left: 60px;
+    margin-bottom: 50px;
+
+}
+
+.profile-recent-project-container {
+    margin-top: 30px;
+}
+
+
+.profile-recent-project-content {
+    padding: 0px 30px 10px 30px;
+
+
+}
+
+
+.profile-project-icon {
+    height: 40px;
+    width: 40px;
+}
+
+
+.profile-project-audio {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+
+
+.profile-give-feedback {
+    padding-top: 5px;
+}
+
+
+
+
+.profile-rating {
+    padding-top: 10px;
+    font-size: 20px;
+/*    text-align: center;*/
+
+}
+
+
+.profile-reviewer-rating {
+    font-size: 24px;
+}
+
+
+
+.profile-body-right {
+
+    padding-left: 60px;
+    padding-right: 30px;
+
+}
+
+
+.profile-content{
+    text-align: center;
+    min-height: 540px;
+    padding: 30px 0px 0px 0px;
+}
+
+
+
+.profile-website {
+    padding: 0px 20px 60px 20px;
+}
+
+
+
+
+/* Edit Profile */
+
+
+.profile-edit-content {
+    min-height: 540px;
+    padding: 40px 40px 40px 40px;
+    font-size: 16px;
+}
+
+
+
+.profile-edit-photo {
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+
+.profile-edit-photo-content {
+    display: inline-block;
+    height: 175px;
+    width: 175px;
+
+}
+
+
+.profile-edit-photo-btn {
+    margin-bottom: 80px;
+    text-align: center;
+
+}
+
+
+.photo-save
+{
+    padding: 100px 0px 0px 0px;
+}
+
+.settings-photo{
+    height: 200px;
+    width: 200px;
+}
+
+.profile-edit-upload-first {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+}
+
+
+
+

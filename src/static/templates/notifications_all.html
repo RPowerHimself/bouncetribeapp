@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-xs-12 col-sm-9 col-md-9">
+
+<div class="panel panel-default">
+		  
+<div class="panel-body">
+
+<div class="notification-container">
+
+
+<h2>Notifications</h2>
+
+<hr>
+<br>
+
+
+{% if notifications_list %}
+
+
+
+
+{% for notification in notifications_list %}
+
+
+
+
+{% if notification.notification_type = "User Match" %}
+
+
+
+<div class="notifications-all-notification">
+
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-user"></i> {{ notification.title }}</a></h4>
+
+{% else %}
+
+<h4><a href="{{ notification.get_session_url }}"><i class="fa fa-user"></i> {{ notification.title }}</a></h4>
+
+{% endif %}
+
+
+<br>
+
+<p>{{ notification.text }} <a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a></p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+
+{% elif notification.notification_type = "Feedback Received" %}
+
+
+<div class="notifications-all-notification">
+
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-bolt"></i> {{ notification.title }}</a></h4>
+
+{% else %}
+
+<h4><a href="{{ notification.get_session_url }}"><i class="fa fa-bolt"></i> {{ notification.title }}</a></h4>
+
+{% endif %}
+
+<br>
+
+<p>{{ notification.text }} <a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a></p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+{% elif notification.notification_type = "Feedback Liked" %}
+
+
+<div class="notifications-all-notification">
+
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ notification.title }}</a></h4>
+
+{% else %}
+
+<h4><a href="{{ notification.get_session_url }}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ notification.title }}</a></h4>
+
+{% endif %}
+
+
+<br>
+
+<p><a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a> {{ notification.text }} </p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+{% elif notification.notification_type = "Chat Message" %}
+
+
+<div class="notifications-all-notification">
+
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_chat_url }}"><i class="fa fa-comment-o"></i> {{ notification.title }}</a></h4>
+
+{% else %}
+
+<h4><a href="{{ notification.get_chat_url }}"><i class="fa fa-comment-o"></i> {{ notification.title }}</a></h4>
+
+{% endif %}
+
+<br>
+
+<p><a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a> {{ notification.text }}</p>
+<br>
+
+
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+
+
+{% elif notification.notification_type = "Tribe Request Accepted" %}
+
+
+<div class="notifications-all-notification">
+
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_profile_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+{% else %}
+
+<h4><a href="{{ notification.get_profile_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+{% endif %}
+
+
+<br>
+
+<p><a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a> {{ notification.text }} </p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+
+{% elif notification.notification_type = "Tribe Feedback" %}
+
+
+<div class="notifications-all-notification">
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_tribe_project_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+
+{% else %}
+
+<h4><a href="{{ notification.get_tribe_project_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+
+{% endif %}
+
+
+<br>
+
+<p><a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a> {{ notification.text }}</p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+{% elif notification.notification_type = "SubTribe Created" %}
+
+
+<div class="notifications-all-notification">
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_subtribe_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+
+{% else %}
+
+<h4><a href="{{ notification.get_subtribe_url }}"><i class="fa fa-users"></i> {{ notification.title }}</a></h4>
+
+
+{% endif %}
+
+
+<br>
+
+<p><a href="{{ notification.get_profile_url }}">{{ notification.from_user }}</a> {{ notification.text }}</p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+
+
+
+{% elif notification.notification_type = "Reviewer Promotion" %}
+
+<div class="notifications-all-notification">
+
+{% if notification.unread = True %}
+
+<h4><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_user_profile_url }}"><i class="fa fa-star"></i> {{ notification.title }}</a></h4>
+
+
+{% else %}
+
+<h4><a href="{{ notification.get_user_profile_url }}"><i class="fa fa-star"></i> {{ notification.title }}</a></h4>
+
+
+{% endif %}
+
+
+<br>
+
+<p>{{ notification.text }}</p>
+<br>
+<div class="notifications-timesince"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</div>
+
+</div>
+
+<br>
+<hr>
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+{% endfor %}
+
+
+
+<div class="tribe-feed-pagination">
+
+
+    		<div class="row">
+
+    			<div class="col-md-4">
+        
+			        {% if notifications_list.has_previous %}
+
+			            <a href="?page={{ notifications_list.previous_page_number }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+
+			        {% endif %}
+
+			    </div>
+
+
+			    <div class="col-md-4 tribe-feed-current">
+
+			        <span class="current">
+			            (Page {{ notifications_list.number }} of {{ notifications_list.paginator.num_pages }})
+			        </span>
+
+				</div>
+
+
+
+				<div class="col-md-4 tribe-feed-next">
+
+	        		{% if notifications_list.has_next %}
+	            		<a href="?page={{ notifications_list.next_page_number }}">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+	        		{% endif %}
+
+	        	</div>
+
+
+	        </div><!-- Row End -->
+
+		</div>
+
+
+
+
+
+
+
+
+{% else %}
+
+
+<p>No Notifications</p>
+
+
+{% endif %}
+
+</div><!-- Notification Container End -->
+
+</div><!-- Panel-Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

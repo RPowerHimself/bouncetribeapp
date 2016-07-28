@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+
+<script>
+$(document).ready(function(){
+	{% block jquery %}
+    $("#test-call").click(function(event){
+    	event.preventDefault();
+   		var request = $.ajax({
+   			method: "POST",
+   			url: "{% url 'ajax_test' %}",
+   			data: {
+          username: "{{ user }}",
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+   			}
+   		})
+      request.done(function(data){
+        console.log("working...")
+      })
+
+      request.fail(function(jqXHR, textStatus){
+        if (jqXHR.status == 404) {
+            alert("page not found!")
+        } else if (jqXHR.status == 403) {
+            alert("You must be logged in to do this.")
+        } else { 
+            alert("There was an error")
+        }
+      })
+    })
+
+    {% endblock jquery %}
+})
+</script>
+
+
+
+
+
+{% block content %}
+
+
+<a id='test-call' href='http://nfl.com'>Test Ajax</a>
+
+<div id='content'></div>
+
+
+<br>
+<br>
+
+{% for message in messages %}
+
+
+<p>{{ message.message }}</p>
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+  	<div class="col-xs-12 col-sm-9 col-md-9">
+
+
+
+  		<div class="panel panel-default">
+		  
+		<div class="panel-body">
+		
+		
+
+
+	    <div class="getfeedback-content">
+
+		<div class="new-project"><img src ='{% static "img/feedback-tribe-icon.png" %}' style="padding: 0px 5px 0px 0px;"/> New Project</div>
+
+
+		  <form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+		  	<!-- {{ form|crispy }}
+			<br/> -->
+
+
+			{% if form.errors %}
+    		
+    		{% for field in form %}
+        	
+        	{% for error in field.errors %}
+            
+            <div class="form-error"><strong>{{ error|escape }}</strong></div>
+
+        	{% endfor %}
+    		{% endfor %}
+
+
+    		{% for error in form.non_field_errors %}
+        	<div><strong>{{ error|escape }}</strong></div>
+    		{% endfor %}
+			{% endif %}
+
+
+			<label>Select Your Audio File</label>
+			{{ form.audio_file }}
+			</br>
+
+			<label>Name Your Project</label>
+			{{ form.title }}
+			</br>
+
+			<label>Briefly Describe Your Project (Optional)</label>
+			{{ form.short_description }}
+			</br>
+
+			<label>Genre</label>
+			{{ form.genre }}
+			</br>
+
+			<label><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>  Work In Progress</label>
+			{{ form.incomplete }}
+			</br>
+
+			</br>
+			</br>
+			</br>
+
+
+
+			<input class='btn btn-success btn-lg' type='submit' value='Share With Tribe' />
+
+			</form>
+
+			</div><!-- Getfeedback-Content End -->
+
+
+
+
+
+
+
+
+
+
+
+		  </div><!-- Panel-Body End -->
+		  
+
+
+		</div><!-- Panel End -->
+
+
+
+
+	</div><!-- Col End -->
+
+
+
+
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

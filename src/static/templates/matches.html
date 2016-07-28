@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load friendshiptags %}
+
+
+ {% block styles %}
+
+ <style>	
+ .jumbotron {
+    	text-align: center;
+    }
+</style>
+
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+
+
+
+{% if projects_queued %}
+
+<!-- Queued Project -->
+
+
+	{% for project in projects_queued %}
+
+		<div class="row">
+
+			<div class='col-sm-12 col-md-12'>
+
+				<div class="queued-content">
+
+
+					<img src ='{% static "img/project-icon-3.png" %}' />
+
+					<div class="queued-title">
+
+						<a href="{{ project.get_absolute_url }}">"{{ project.title }}"</a>
+
+					</div>
+
+					<div class="queued-inqueue">
+
+						<i class="fa fa-clock-o"></i> IN QUEUE
+
+					</div>
+
+					<p> Searching for Feedback...</p>
+
+
+				</div><!-- End Queued Content -->
+
+			</div><!-- End Col -->
+
+		</div><!-- End Row -->
+
+	{% endfor %}
+
+
+<!-- End Queued Project -->
+
+{% endif %}
+
+
+
+
+
+
+
+<!-- Matches Body -->
+
+<div class="row">
+
+
+
+
+	{% if not matches and not projects_queued %}
+
+		<div class="no-matches">
+
+			<p>Upload your projects to receive matches.</p>
+
+			<a href="{% url 'new_match_project' %}" class="btn btn-match btn-lg"><i class="fa fa-user"></i> Get Matched</a>
+		
+		</div>
+
+	{% endif %}
+
+
+	{% if not matches and projects_queued %}
+
+		<div class="no-matches">
+
+			<p>Want to add your friends?</p>
+
+			<a href="{% url 'tribe_find' %}" class="btn btn-match btn-lg">Find Friends</a>
+
+		</div>
+
+	{% endif %}
+
+
+
+
+
+
+
+
+
+
+	<!-- Matches -->
+
+	<div class='col-sm-9 col-md-9'>
+
+
+
+		{% for match_user, project, session in matches %}
+
+
+				<div class='match-container'>
+
+
+
+
+					<div class='match-title'><!-- Match Title -->
+
+				
+						<h2><a href="{{ session.get_absolute_url }}"><img src ='{% static "img/project-icon-3.png" %}' height="45px"/> "{{ project }}"</a></h2>
+				
+
+					</div><!-- End Match Title -->
+
+
+
+
+
+					<div class="match-content"><!-- Match Content -->
+
+
+						<div class="row">
+
+
+							<!-- Match Photo -->
+							
+							<div class='col-md-3 col-xs-12'>
+
+								<div class="match-img">
+
+									{% if match_user.profile.get_thumbnail %}
+										
+										<a href="{{ session.get_absolute_url }}"><img src='{{ match_user.profile.get_thumbnail }}' class='img-responsive img-circle'  /></a>
+
+									{% else %}
+									
+										<a href="{{ session.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle' /></a>
+								
+									{% endif %}
+
+								</div>
+
+							</div><!-- End Match Photo -->
+
+
+
+
+							<!-- Match Info -->
+
+							<div class='col-md-5 col-xs-12'>
+
+								<h3><a href="{{ match_user.profile.get_absolute_url }}">{{ match_user.profile.name }}</a></h3>
+
+
+								{% if match_user.profile.location %}
+
+									<div class="profile-location">
+
+										<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ match_user.profile.location }}
+
+									</div>
+
+								{% endif %}
+
+
+							</div><!-- End Match Info -->
+
+
+
+
+							<!-- View Button -->
+
+							<div class='col-md-4 col-xs-12'>
+
+
+							<div class="match-view-btn">
+
+
+								{% if session.get_session_timer == "Expired" %}
+
+									<a href="{{ session.get_absolute_url }}" class="btn btn-gray btn-lg"><i class="fa fa-clock-o"></i>  {{ session.get_session_timer }}</a>
+
+
+								{% else %}
+
+									<a href="{{ session.get_absolute_url }}" class="btn btn-match btn-lg"><i class="fa fa-clock-o"></i>  {{ session.get_session_timer }}</a>
+
+
+								{% endif %}
+
+
+							</div>
+
+
+								
+
+							</div><!-- End View Col -->
+
+
+						</div><!-- End Match Content Row -->
+
+
+					</div><!-- End Match Content -->
+
+
+			
+
+				</div><!-- End Match Container  -->
+
+
+		{% endfor %}
+
+	</div><!-- End Col Matches -->
+
+
+
+
+
+
+
+	<!-- Stats -->
+
+
+	{% if matches %}
+
+
+		<div class='col-sm-3 col-md-3'>
+
+			<div class="panel panel-default">
+
+				<div class="panel-body">
+
+					<div class="matches-stats-container">
+
+						<div class="matches-stats">
+
+							{{ sessions_total }}
+
+							<h4>Matches</h4>
+
+						</div>
+
+
+						<div class="matches-stats">
+
+							{{ user.profile.total_likes }}
+
+							<h4>Feedback Likes</h4>
+
+						</div>
+
+					</div><!-- Matches-Container End -->	
+
+				</div><!-- Previous-Sessions End -->	
+		
+			</div><!-- Panel-Body End -->
+
+		</div><!-- Match Container End -->
+
+
+	{% endif %}
+
+
+
+</div><!-- End Matches Body Row -->
+
+{% endblock %}
+
+

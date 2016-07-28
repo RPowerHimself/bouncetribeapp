@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+
+<div class="panel panel-default">
+		  
+<div class="panel-body">
+
+<div class="previous-sessions-content">
+
+
+
+<div class="feedbackers-header">Previous Sessions ({{ sessions_total }})</div>
+
+<br>
+
+
+
+
+
+<table class="table table-hover table-responsive">
+
+<thead>
+<tr>
+<th></th>
+<th>Match's Name</th>
+<th>Match's Project</th>
+<th>My Project</th>
+<th style="text-align: center;">Active</th>
+
+
+
+</tr>
+</thead>
+
+
+{% for user, project, my_project, session in previous_sessions %}
+
+<tr>
+<td>
+
+
+{% if user.profile.get_thumbnail %}
+<a href="{{ session.get_absolute_url}}"><img src='{{ user.profile.get_thumbnail }}' class='img-responsive img-circle tribe-img'/></a>
+
+{% else %}
+<a href="{{ session.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle tribe-img'/></a>
+				
+{% endif %}
+
+
+</td>
+
+
+<td style="vertical-align: middle;"><a href="{{ session.get_absolute_url}}">{{ user }}</a></td>
+<td style="vertical-align: middle;"><a href="{{ session.get_absolute_url}}">{{ project }}</a></td>
+<td style="vertical-align: middle;"><a href="{{ session.get_absolute_url}}">{{ my_project }}</a></td>
+<td style="text-align: center; vertical-align: middle;">
+
+{% if session.active %}
+<i class="fa fa-check"></i>
+
+{% endif %}
+
+</td>
+
+
+
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+
+
+
+</div><!-- Previous Sessions Content End -->
+
+</div><!-- Panel-Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+
+{% endblock %}

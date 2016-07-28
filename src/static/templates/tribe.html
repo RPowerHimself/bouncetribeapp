@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load friendshiptags %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+	<!-- Panel -->
+
+	<div class="panel panel-default">
+		  
+
+		<!-- Panel Body -->
+
+		<div class="panel-body">
+
+
+
+			<div class="tribe-container">
+
+				{% if all_friends %}
+
+					<!-- Tribe Header -->
+
+
+					<div class="row">
+
+
+
+
+						<div class='col-md-10'>
+
+
+							<h2>My Tribe</h2>
+
+
+						</div>
+
+
+						<div class='col-md-2'>
+
+
+							<div class="tribe-nav">
+
+								
+
+								<a href="{% url 'tribe_find' %}"><button class="btn btn-match btn-md find-friends-btn" type="button">
+									        <i class="fa fa-user-plus" aria-hidden="true"></i>
+									        Add Friends</button><a/>
+
+								
+
+								<!-- <a href="{% url 'subtribe_create' %}"><button class="btn btn-success btn-md find-friends-btn" type="button">
+									        <i class="fa fa-users"></i>
+									        Create Subtribe</button><a/> -->
+
+							</div>
+
+						</div>
+
+
+
+
+					{% else %}
+
+
+						<div class="tribe-no-members">
+			
+							<p>Add Friends to Your Tribe.</p>
+							<a href="{% url 'tribe_find' %}" class="btn btn-match btn-lg"><i class="fa fa-user-plus"></i> Add Friends</a>
+			
+						</div>
+
+
+					{% endif %}
+
+
+
+
+
+				</div><!-- End Tribe Header Row -->
+
+
+
+
+						
+
+
+				<!-- {% if subtribes %} -->
+
+					<!-- SubTribes -->
+
+					<!-- <div class="tribe-subtribes">
+
+						<div class="table-responsive">
+
+							<table class="table table-hover">
+
+								<thead>
+									
+									<tr>
+										<th>SubTribes</th>
+										<th style="text-align: center;">Members</th>
+									
+									</tr>
+								
+								</thead>
+
+
+								{% for subtribe in subtribes %} 
+
+									<tr>
+										
+										<td style="vertical-align: middle;"><a href="{{ subtribe.get_absolute_url}}">{{ subtribe.name }}</a></td>
+										
+										<td style="text-align: center; vertical-align: middle;">{{ subtribe.total_members }}</td>
+											
+									</tr>
+
+								{% endfor %}
+
+							</table> -->
+
+						<!-- </div> --><!-- End Responsive Table -->
+
+					<!-- </div> --><!-- End Tribe-SubTribes -->
+
+
+				<!-- {% endif %} -->
+
+
+
+						
+
+
+
+
+
+				
+
+				{% if all_friends %}
+
+
+					<!-- Main Tribe -->
+
+					<div class="tribe-main-tribe">
+
+						<div class="table-responsive">
+
+							<table class="table table-hover table-responsive">
+
+								<thead>
+
+									<tr>
+										<th></th>
+										<th class="hidden-xs">Name</th>
+										<th class="visible-xs">Tribe</th>
+
+										<th class="hidden-xs" style="text-align: center;">Location</th>
+										<th class="hidden-xs" style="text-align: center;">Rating</th>
+										<th class="hidden-xs" style="text-align: center;">Projects Shared</th>
+
+									</tr>
+								
+								</thead>
+
+
+								{% for user in all_friends %}
+
+									<tr>
+
+										<td>
+
+										{% if user.profile.get_thumbnail %}
+											<a href="{{ user.profile.get_absolute_url }}"><img src='{{ user.profile.get_thumbnail }}' class='img-responsive img-circle tribe-img'/></a>
+
+										{% else %}
+											<a href="{{ user.profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle tribe-img'/></a>
+														
+										{% endif %}
+
+										</td>
+
+
+										<td style="vertical-align: middle;"><a href="{{user.profile.get_absolute_url}}">{{ user }}</a></td>
+
+										<td class="hidden-xs" style="text-align: center; vertical-align: middle;">{{ user.profile.location }}</td>
+
+
+
+
+										<td class="hidden-xs" style="text-align: center; vertical-align: middle;">
+
+											{% if user.profile.reviewer_rating == "Top Reviewer" %}
+
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+											{% elif user.profile.reviewer_rating == "Revered Reviewer" %}
+
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+											{% elif user.profile.reviewer_rating == "Respected Reviewer" %}
+
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+											{% elif user.profile.reviewer_rating == "Helpful Reviewer" %}
+
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+											{% elif user.profile.reviewer_rating == "Liked Reviewer" %}
+
+												<i class="fa fa-star"></i>
+
+
+											{% elif user.profile.reviewer_rating == "New Reviewer" %}
+
+												<i class="fa fa-star-o"></i>
+
+											{% endif %}
+
+										</td>
+
+
+
+
+										<td class="hidden-xs" style="text-align: center; vertical-align: middle;">{{ user.profile.get_total_project }}</td>
+
+
+									</tr>
+
+								{% endfor %}
+
+							</table>
+
+						</div><!-- End Responsive Table -->
+
+					</div><!-- End Main-Tribe -->
+
+
+
+				{% endif %}
+
+
+
+
+
+			</div><!-- Tribe-Container -->
+
+
+		</div><!-- Panel Body End -->
+		  
+	</div><!-- Panel End -->
+
+</div><!-- Row End -->
+
+
+{% endblock %}

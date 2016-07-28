@@ -1,0 +1,116 @@
+
+/* Matches */
+
+
+.no-matches{
+    font-size: 36px;
+    color: #BDBFC1;
+    padding: 160px 0px 0px 20px;
+    text-align: center;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+.match-container { 
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    margin: 0px 0 30px 0;
+    padding: 20px 0px 30px 40px; 
+}
+
+
+
+.match-title {
+    margin-bottom: 30px;
+}
+
+
+.match-content {
+    margin-bottom: 10px;
+}
+
+
+.match-img {
+    margin-left: 10px;
+    height: 150px;
+    width: 150px;
+    text-align: center;
+
+}
+
+
+.match-picture {
+    float: left;
+}
+
+
+.match-view-btn {
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+.match-timer {
+
+font-size: 14px;
+color: #777777;
+margin-top: 25px;
+
+}
+
+
+.matches-stats-container {
+    min-height: 270px;
+}
+
+
+.matches-stats {
+    padding: 20px 0px 10px 0px;
+    text-align: center;
+    font-size: 48px;
+    font-weight: lighter;
+}
+
+
+
+
+/* Queued Projects */
+
+
+.queued-content {
+    background-color: #303030;
+    color: #acacac;
+    text-align: center;
+    min-height: 280px;
+    margin: 0px 0px 40px 0px;
+    padding: 45px 0px 0px 0px;
+}
+
+
+.queued-title {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    letter-spacing: 1px;
+    padding: 10px 0px 0px 0px;
+    font-size: 36px;
+    color: #ffffff;
+}
+
+.queued-title a{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    letter-spacing: 1px;
+    padding: 10px 0px 0px 0px;
+    font-size: 36px;
+    color: #ffffff;
+}
+
+.queued-inqueue {
+    font-size: 24px;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    padding: 20px 0px 0px 0px;
+    color: #acacac;
+
+}
+

@@ -1,0 +1,382 @@
+{% load staticfiles %}
+{% load friendshiptags %}
+
+
+
+
+
+
+
+
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="{% url 'tribe_feed' %}"><img src='{% static "img/logo3.png" %}'/></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right">
+
+
+<!--             {% url "home" as home %}
+            {% url "feedback" as feedback %}
+            {% url "tribe" as tribe %} -->
+
+
+
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'new_match_project' %}"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload Project</a></li>
+            <li><a href="{% url 'home' %}"><i class="fa fa-user"></i> My Matches</a></li>
+
+
+            <!-- Notifications -->
+
+
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+            {% if total_notifications %}
+
+           <span class="badge notifications-badge">{{ total_notifications }}</span> Notifications</a> 
+
+            {% else %}
+
+            <i class="fa fa-bell"></i> Notifications</a> 
+
+
+            {% endif %} 
+
+
+
+
+            <ul class="dropdown-menu">
+
+            {% if not notifications and not friendship_requests %}
+
+            <div class="nav-notification">
+
+
+
+            <li><a href="{% url 'new_match_project' %}">Welcome to BounceTribe!</a></li>
+            
+            <li class="dropdown-header"><a href="{% url 'new_match_project' %}">Build Your Creative Tribe</a></li>
+
+            <li role="separator" class="divider"></li>
+            
+
+            </div>
+
+            {% endif %}
+
+
+
+            {% if friendship_requests %}
+
+            {% for friendship_request in friendship_requests %}
+
+        
+            <div class="nav-notification">
+ 
+            <li><a href="{{ friendship_request.from_user.profile.get_absolute_url }}"><i class="fa fa-users"></i> Tribe Request!</a></li>
+
+            <li class="dropdown-header"><a href="{{ friendship_request.from_user.profile.get_absolute_url }}">{{ friendship_request.from_user }}</a> wants to join your tribe.</li>
+            
+            <div class="friend-buttons">
+            
+            <form method="post" action="{% url 'friendship_accept' friendship_request.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="accept" class="btn btn-match btn-sm" />
+
+            </form>
+
+            <form method="post" action="{% url 'friendship_reject' friendship_request.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="dismiss" class="btn btn-warning btn-sm" />
+            </form>
+            </div><!-- Friend-Buttons End -->
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+            {% endfor %}
+
+
+
+            {% endif %}
+
+
+
+
+
+            {% if notifications %}
+
+
+
+            {% for title, from_user, text, session, notification in notifications %}
+
+
+            {% if notification.notification_type = "User Match" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-user"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_session_url }}"><i class="fa fa-user"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header">{{ text }} <a href="{{ notification.get_profile_url }}">{{ from_user }}</a></li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+            {% elif notification.notification_type = "Feedback Received" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-bolt"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_session_url }}"><i class="fa fa-bolt"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header">{{ text }} <a href="{{ notification.get_profile_url }}">{{ from_user }}</a></li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+
+            {% elif notification.notification_type = "Feedback Liked" %}
+
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+               
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_session_url }}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_session_url }}"><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ title }}</a></li>
+
+            {% endif %}
+
+            <li class="dropdown-header"><a href="{{ notification.get_profile_url }}">{{ from_user }}</a> {{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+
+            {% elif notification.notification_type = "Chat Message" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_chat_url }}"><i class="fa fa-comment-o"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_chat_url }}"><i class="fa fa-comment-o"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header"><a href="{{ notification.get_profile_url }}">{{ from_user }}</a> {{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+
+
+
+
+            {% elif notification.notification_type = "Tribe Request Accepted" %}
+
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+               
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_profile_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_profile_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% endif %}
+
+            <li class="dropdown-header"><a href="{{ notification.get_profile_url }}">{{ from_user }}</a> {{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+            {% elif notification.notification_type = "Tribe Feedback" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_tribe_project_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_tribe_project_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header"><a href="{{ notification.get_profile_url }}">{{ from_user }}</a> {{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+
+            {% elif notification.notification_type = "SubTribe Created" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_subtribe_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_subtribe_url }}"><i class="fa fa-users"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header"><a href="{{ notification.get_profile_url }}">{{ from_user }}</a> {{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+
+
+
+            {% elif notification.notification_type = "Reviewer Promotion" %}
+
+            <div class="nav-notification">
+
+            {% if notification.unread = True %}
+
+            <li><img src ='{% static "img/notification-alert.png" %}' class="notification-alert"/> <a href="{{ notification.get_user_profile_url}}"><i class="fa fa-star"></i> {{ title }}</a></li>
+
+            {% else %}
+
+            <li><a href="{{ notification.get_user_profile_url }}"><i class="fa fa-star"></i> {{ title }}</a></li>
+
+            {% endif %}
+            
+            <li class="dropdown-header">{{ text }}</li>
+
+            <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ notification.timesince }} ago</li>
+
+            <li role="separator" class="divider"></li>
+
+            </div>
+           
+
+
+            {% else %}
+
+
+            {% endif %} 
+
+            {% endfor %}
+
+            {% endif %}
+
+            <li><div class="nav-view-all"><a href="{% url 'get_all_notifications' %}">View All Notifications</a></div></li>
+            
+            </ul>
+            </li>
+
+            
+
+            {% endif %} 
+
+
+            <!-- Login Profile -->
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                {% if request.user.is_authenticated %}
+                {{ request.user }}
+                <span class="caret"></span></a>
+                {% else %}
+                <li><a href="{% url 'account_login' %}">Login</a></li>
+
+                {% endif %} 
+
+                
+
+              <ul class="dropdown-menu">
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'profile_user' %}"><i class="fa fa-user"></i> My Profile</a></li>
+
+                <li><a href="{% url 'settings' %}"><i class="fa fa-cog"></i> Edit Profile</a></li>
+
+                <li role="separator" class="divider"></li>
+
+                <li><a href="{% url 'tribe' %}"><i class="fa fa-users"></i> My Tribe</a></li>
+
+                <li><a href="{% url 'projects' %}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> My Projects</a></li>
+                
+                <li role="separator" class="divider"></li>
+                <!-- <li class="dropdown-header">Nav header</li> -->
+                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>

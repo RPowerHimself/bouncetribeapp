@@ -1,0 +1,62 @@
+/* Notifications */
+
+
+
+
+.nav-notification {
+    padding: 10px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
+
+}
+
+.nav-view-all {
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+    font-size: 12px;
+}
+
+.notifications-all-notification {
+    padding: 10px 10px 0px 10px;
+}
+
+.notification-title a{
+    font-size: 19px;
+    color: #4B4F54;
+    text-decoration: none;
+}
+
+
+.notification-title {
+    font-size: 19px;
+    color: #4B4F54;
+    text-decoration: none;
+}
+
+
+.notifications-timesince {
+    font-size: 12px;
+    color: #777777;
+}
+
+
+.notification-container {
+    padding: 20px 40px 20px 40px;
+    min-height: 300px;
+}
+
+
+
+.notification-dismiss a{
+    float: right;
+    color: #BDBFC1;
+}
+
+
+
+.notification-alert {
+    padding: 0px 5px 0px 0px;
+}
+
+.notifications-badge {
+    background-color: #58c4df;
+}

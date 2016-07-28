@@ -1,0 +1,554 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block content %}
+
+
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-9 col-md-9">
+
+		<div class="panel panel-default">
+		  
+			<div class="panel-body">
+
+				<div class="project-content">
+
+
+					<div class="row">
+
+						<div class="col-xs-12 col-md-10">
+
+							<h2><img src='{% static "img/project-icon-3.png" %}' class="project-icon"/> {{ instance.title }}</h2>
+
+						</div>
+
+
+					</div>
+
+
+
+					{% if instance.audio_file %}
+
+						<div class="row">
+
+							<div class="col-xs-12 col-sm-8 col-md-8">
+
+								<div class="project-audio">
+
+									<!-- <audio id="player" src="{{ instance.audio_file.url }}" type="audio/mp3" controls="controls"></audio> -->
+
+									<div class="mediatec-cleanaudioplayer">
+		    						
+			    						<ul data-theme="default" data-disable-controls="true">
+			        						<li data-title="{{ instance.title }}" data-artist="{{ request.user }}" data-type="mp3" data-url="{{ instance.audio_file.url }}" data-free="false"></li>
+			    						</ul>
+									
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+
+						
+
+					{% endif %}
+
+						<h3><i class="fa fa-music" aria-hidden="true"></i> {{ instance.genre }}</h3>
+
+					{% if instance.short_description %}
+
+						<div class="project-description">
+
+							<p>{{ instance.short_description }}</p>
+
+						</div>
+
+					{% endif %}
+
+
+
+
+
+					{% if instance.user == request.user %}
+
+						<!-- If Project User -->
+
+						<div class="project-buttons">
+
+							<a href="{% url 'edit_project' instance.id %}"><button class="btn btn-gray-sm"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+
+								<a href="{% url 'delete_project' instance.id %}"><button class="btn btn-gray-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></button></a>
+
+						</div>
+
+						<div class="project-private-toggle">
+
+							<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+								
+
+										{% if instance.active %}
+
+											<button name="deactivate" class="btn btn-gray-sm project-button" type="submit">
+											<i class="fa fa-unlock" aria-hidden="true"></i> Public
+											</button>
+
+										{% else %}
+
+											<button name="activate" class="btn btn-like project-button" type="submit">
+											<i class="fa fa-lock" aria-hidden="true"></i> Private
+											</button>
+
+										{% endif %}
+
+							</form>
+
+						</div>
+
+						
+
+
+						<br>
+
+
+
+
+
+
+
+
+						<!-- Get Matched -->
+
+						{% if queueable == True %}
+
+							{% if not instance.queued and instance.active == True %}
+
+								<div class="project-morefeedback">
+
+									<form id="get_matched" method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+										<input name="get_matched" class='btn btn-match btn-lg' type='submit' value='Get Matched' />
+
+									</form>
+
+								</div>
+
+							{% elif not instance.queued and instance.active == False %}
+
+
+							{% else %}
+		
+								<div class="project-searching"><i class="fa fa-clock-o"></i> Searching for Feedback...</div>
+
+
+
+									<form id="leave_queue" method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+										<input name="leave_queue" class='btn btn-match btn-lg' type='submit' value='Leave Queue' />
+
+									</form>
+
+
+							{% endif %}
+
+
+						{% else %}
+
+							<div class="project-waiting">
+
+
+								<a href="{{ unfed_session.get_absolute_url }}">
+
+									<button class="btn btn-gray btn-lg" type="button"><i class="fa fa-clock-o"></i> Waiting for your feedback</button>
+
+								</a>
+
+							</div>
+
+
+						{% endif %}
+
+
+
+					{% endif %}
+
+
+
+
+
+
+
+					{% if instance.user != request.user %}
+
+						<br>
+						<br>
+
+						<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+
+							{{ form|crispy }}
+						
+							<br/>
+
+							<input name="give_feedback" class='btn btn-match btn-lg' type='submit' value='Give Feedback' />
+
+						</form>
+					
+					{% endif %}
+
+
+					
+
+
+
+
+
+					<!-- Feedback -->
+
+					<div class="project-feedback-container">
+
+						<div class="row">
+
+	 						<div class="col-xs-12 col-sm-11 col-md-11">
+
+
+								{% if comments %}
+
+
+									<div class="project-feedback-header">
+
+	 									<h3><i class="fa fa-users"></i> Tribe Feedback</h3>
+
+									</div>
+
+
+									{% for comment in comments %}
+
+
+										<div class="project-feedback-item">
+
+											<hr>
+
+
+											{% if comment.user.profile.get_thumbnail %}
+
+												<div class="project-feedback-user"><a href="{{ comment.user.profile.get_absolute_url }}">
+
+													<img src='{{ comment.user.profile.get_thumbnail }}' class='project-feedback-user-img img-circle'> {{ comment.user }}</a>
+
+												</div>
+
+											{% else %}
+
+												<div class="project-feedback-user"><a href="{{ comment.user.profile.get_absolute_url }}">
+
+													<img src='{% static "img/avatar_default.jpg" %}' class='project-feedback-user-img img-circle'> {{ comment.user }}</a>
+
+												</div>
+
+					
+											{% endif %}
+
+
+
+											<div class="project-feedback-content">
+
+
+												<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-positive-30-2.png" %}' class="project-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="project-feedback-text">{{ comment.positive_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+
+		 										<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-change-30.png" %}' class="project-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="project-feedback-text">{{ comment.negative_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+	 										</div><!-- End Project Feedback Content -->
+
+
+	 								
+
+
+										</div><!-- Project Feedback Item End -->
+
+										
+
+									{% endfor %}	
+
+								{% endif %}
+
+
+
+
+
+	 							{% if feedback and request.user == instance.user %}
+
+
+	 								<div class="project-feedback-header">
+
+	 									<h3><i class="fa fa-comment-o"></i> Outside Feedback</h3>
+
+									</div>
+
+
+
+
+									{% for session in feedback %}
+
+
+									
+
+											<!-- If User A -->
+
+											{% if session.user_a == instance.user %}
+
+												{% if session.user_a_positive_feedback and session.user_a_negative_feedback %}
+
+
+													<div class="project-feedback-item">
+
+													<hr>
+
+
+													{% if session.user_b.profile.get_thumbnail %}
+
+														<div class="project-feedback-user">
+
+															<a href="{{ session.user_b.profile.get_absolute_url }}">
+																<img src='{{ session.user_b.profile.get_thumbnail }}' class='project-feedback-user-img img-circle'> {{ session.user_b }}
+															</a>
+
+														</div>
+
+													{% else %}
+
+														<div class="project-feedback-user">
+
+															<a href="{{ session.user_b.profile.get_absolute_url }}">
+																<img src='{% static "img/avatar_default.jpg" %}' class='project-feedback-user-img img-circle'> {{ session.user_b }}
+															</a>
+
+														</div>
+
+							
+													{% endif %}
+
+
+													<div class="project-feedback-content">
+
+
+														<div class="row">
+
+				 											<div class="col-xs-12 col-md-1">
+
+				 												<img src='{% static "img/feedback-positive-30-2.png" %}' class="project-feedback-icon"/>
+
+				 											</div>
+
+
+				 											<div class="col-xs-12 col-md-11">
+
+				 												<div class="project-feedback-text">{{ session.user_a_positive_feedback }}</div>
+
+				 											</div>
+
+				 										</div>
+
+
+				 										<div class="row">
+
+				 											<div class="col-xs-12 col-md-1">
+
+				 												<img src='{% static "img/feedback-change-30.png" %}' class="project-feedback-icon"/>
+
+				 											</div>
+
+
+				 											<div class="col-xs-12 col-md-11">
+
+				 												<div class="project-feedback-text">{{ session.user_a_negative_feedback }}</div>
+
+				 											</div>
+
+				 										</div>
+
+			 										</div><!-- End Project Feedback Content -->
+
+			 										</div><!-- Project Feedback Item End -->
+
+
+												{% endif %}
+
+
+											{% endif %}
+
+
+
+
+
+
+											<!-- If User B -->
+
+											{% if session.user_b == instance.user %}
+
+												{% if session.user_b_positive_feedback and session.user_b_negative_feedback %}
+
+													<div class="project-feedback-item">
+
+													<hr>
+
+
+													{% if session.user_a.profile.get_thumbnail %}
+
+
+														<div class="project-feedback-user">
+
+															<a href="{{ session.user_a.profile.get_absolute_url }}">
+
+																<img src='{{ session.user_a.profile.get_thumbnail }}' class='project-feedback-user-img img-circle'> {{ session.user_a }}
+
+															</a>
+
+														</div>
+
+													{% else %}
+
+														<div class="project-feedback-user">
+
+															<a href="{{ session.user_a.profile.get_absolute_url }}">
+
+																<img src='{% static "img/avatar_default.jpg" %}' class='project-feedback-user-img img-circle'> {{ session.user_a }}</a>
+
+															</div>
+
+							
+													{% endif %}
+
+
+													<div class="project-feedback-content">
+
+
+														<div class="row">
+
+				 											<div class="col-xs-12 col-md-1">
+
+				 												<img src='{% static "img/feedback-positive-30-2.png" %}' class="project-feedback-icon"/>
+
+				 											</div>
+
+
+				 											<div class="col-xs-12 col-md-11">
+
+				 												<div class="project-feedback-text">{{ session.user_b_positive_feedback }}</div>
+
+				 											</div>
+
+				 										</div>
+
+
+				 										<div class="row">
+
+				 											<div class="col-xs-12 col-md-1">
+
+				 												<img src='{% static "img/feedback-change-30.png" %}' class="project-feedback-icon"/>
+
+				 											</div>
+
+
+				 											<div class="col-xs-12 col-md-11">
+
+				 												<div class="project-feedback-text">{{ session.user_b_negative_feedback }}</div>
+
+				 											</div>
+
+				 										</div>
+
+			 										</div><!-- End Project Feedback Content -->
+
+			 										</div><!-- Project Feedback Item End -->
+
+												{% endif %}
+
+											{% endif %}
+
+
+
+
+
+
+										
+
+
+
+									{% endfor %}
+
+						
+								{% endif %}
+
+							</div><!-- Col End -->
+
+						</div><!-- Row End -->
+
+
+					</div><!-- End Project Feedback Container -->
+	
+
+
+				</div><!-- Project Content End -->
+
+			</div><!-- Panel-Body End -->
+		  
+		</div><!-- Panel End -->
+
+	</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{% static 'cleanhtml-audioplayer/jquery.cleanaudioplayer.js' %}"></script>
+
+{% endblock %}
+
+
+

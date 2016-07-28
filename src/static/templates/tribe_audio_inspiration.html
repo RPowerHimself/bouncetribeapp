@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+  	<div class="col-xs-12 col-sm-9 col-md-9">
+
+
+
+  		<div class="panel panel-default">
+		  
+		<div class="panel-body">
+		
+		<div class="getfeedback-content">
+
+
+		<div class="new-project"> Share Inspiration</div>
+
+
+		  <form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+		  	<!-- {{ form|crispy }}
+			<br/> -->
+
+
+			{% if form.errors %}
+    		
+    		{% for field in form %}
+        	
+        	{% for error in field.errors %}
+            
+            <div class="form-error"><strong>{{ error|escape }}</strong></div>
+
+        	{% endfor %}
+    		{% endfor %}
+
+
+    		{% for error in form.non_field_errors %}
+        	<div><strong>{{ error|escape }}</strong></div>
+    		{% endfor %}
+			{% endif %}
+
+
+			<label>Title</label>
+			{{ form.title }}
+			</br>
+
+			<label>Artist</label>
+			{{ form.artist }}
+			</br>
+
+			<label><i class="fa fa-youtube"></i> YouTube,  <i class="fa fa-vimeo-square"></i> Vimeo, or  <i class="fa fa-soundcloud"></i> SoundCloud URL</label>
+			{{ form.video }}
+			</br>
+
+			<label>Your Comments</label>
+			{{ form.comments }}
+			</br>
+
+			</br>
+
+			<input class='btn btn-match btn-lg' type='submit' value='Share Inspiration' />
+
+			</form>
+
+			</div><!-- Getfeedback-Content End -->
+
+		  </div><!-- Panel-Body End -->
+		  
+
+
+		</div><!-- Panel End -->
+
+
+
+
+	</div><!-- Col End -->
+
+
+
+
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

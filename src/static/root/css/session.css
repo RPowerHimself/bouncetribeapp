@@ -1,0 +1,232 @@
+/* Session */
+
+
+
+.session-members {
+    text-align: center;
+    margin-top: 80px;
+    margin-left: 0px;
+}
+
+.session-members-img {
+    height: 125px;
+    width: 125px;
+    display: inline-block;
+    text-align: center;
+}
+
+
+.session-members-location {
+    color: #777777;
+    margin-bottom: 30px;
+}
+
+
+.session-user-experience {
+    padding-top: 15px;
+}
+
+
+.session-user-experience-icon {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+
+.session-chat-btn {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+
+.session-content {
+    padding: 30px 30px 30px 30px;
+}
+
+
+
+.session-container {
+    padding: 20px;
+    min-height: 800px;
+
+}
+
+
+.session-project {
+    padding-bottom: 20px;
+}
+
+
+.session-audio {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+.session-description {
+    margin-bottom: 30px;
+}
+
+.session-experience {
+    color: #777777;
+    margin-bottom: 50px;
+}
+
+
+
+.session-feedback {
+    margin-bottom: 40px;
+}
+
+
+.session-feedback-content {
+    margin-top: 20px;
+
+}
+
+.session-feedback-label {
+    padding-bottom: 15px;
+}
+
+
+.session-feedback-submit-icon {
+    margin-right: 5px;
+}
+
+.session-feedback-icon {
+    margin-bottom: 10px;
+    
+}
+
+.session-icon-header {
+    margin-bottom: 25px;
+    font-size: 18px;
+
+}
+
+.session-feedback-edit {
+    font-size: 14px;
+    color: #999999;
+}
+
+.session-feedback-text {
+    margin-top: 3px;
+    margin-bottom: 50px;
+    color: #777777;
+    line-height: 1.5;
+}
+
+
+.session-feedback-editable {
+    margin-top: 3px;
+    padding-top: 10px;
+    margin-bottom: 40px;
+    color: #777777;
+    line-height: 1.5;
+}
+
+
+.session-feedback-positive {
+    margin-bottom: 20px;
+
+}
+
+.session-feedback-negative {
+
+}
+
+
+.session-feedback-like {
+    margin-top: 30px;
+}
+
+
+
+.session-buttons {
+    float: right;
+    font-size: 30px;
+    color: #777777;
+}
+
+
+.session-chat {
+    margin-top: 20px;
+}
+
+
+.session-message {
+    padding: 10px 0px 10px 0px;
+}
+
+
+.session-message-user {
+    font-size: 14px;
+    display: inline;
+    margin-bottom: 20px;
+
+}
+
+
+.session-message-content {
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+}
+
+
+.session-send-message {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+
+.no-feedback {
+    font-size: 30px;
+    color: #BDBFC1;
+    padding: 60px 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+
+
+.session-chat-container {
+    padding: 60px;
+    min-height: 700px;
+
+}
+
+
+.session-chat-to-user {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+
+.session-chat-to-user-img {
+    height: 100px;
+    width: 100px;
+}
+
+.session-chat-profile-img {
+    height: 45px;
+    width: 45px;
+    margin-right: 8px;
+}
+
+.session-message-created {
+    padding-top: 20px;
+    color: #999999;
+    font-size: 13px;
+}
+
+.session-chat-back {
+    margin-bottom: 40px;
+}
+
+
+
+
+
+
+

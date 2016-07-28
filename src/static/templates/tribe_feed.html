@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load embed_video_tags %}
+
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+	{% if items %}
+
+
+		<div class="col-xs-12 col-sm-8 col-md-8 col-md-offset-2">
+
+			<div class="tribe-menu">
+
+				<a href="{% url 'tribe' %}">
+					<button class="btn btn-match btn-md tribe-menu-btn" type="button">
+						<i class="fa fa-users"></i>
+					</button>
+				<a/>
+
+				<a href="{% url 'new_audio_inspiration' %}">
+					<button class="btn btn-match btn-md tribe-menu-btn" type="button">
+						<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+					</button>
+				<a/>
+
+			</div>
+
+		</div><!-- End Tribe Menu Col -->
+
+
+
+	{% else %}
+
+		<!-- NO MATCHES -->
+
+		<div class="no-matches">
+			
+			<p>Upload your music to start meeting people.</p>
+			<a href="{% url 'new_match_project' %}" class="btn btn-match btn-lg"><i class="fa fa-cloud-upload"></i> Upload Project</a>
+			
+		</div>
+
+
+	{% endif %}
+
+
+</div><!-- Row End -->
+
+
+
+
+
+
+
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-8 col-md-8 col-md-offset-2">
+
+
+
+
+		{% for user, item in items %}
+
+
+			{% if item.item_type == 'Audio Project' %}
+
+				
+				<div class="tribe-project-container">
+
+
+
+					<div class="panel panel-default">
+		  
+						<div class="panel-body">
+
+							<div class="row">
+
+
+								<div class="tribe-project-content">
+
+								
+									<div class="tribe-project-user">
+
+
+										<a href="{{ user.profile.get_absolute_url }}">
+
+											{% if user.profile.get_thumbnail %}
+
+												<img src='{{ user.profile.get_thumbnail }}' class='tribe-profile-img img-circle'/> 
+
+												{% if item.user == request.user %}
+
+												Me
+
+												{% else %}
+
+												{{ item.user }}
+
+												{% endif %}
+
+											{% else %}
+
+												<img src ='{% static "img/avatar_default.jpg" %}' class ='tribe-profile-img img-circle'/> 
+
+												{% if item.user == request.user %}
+
+												Me
+
+												{% else %}
+
+												{{ item.user }}
+
+												{% endif %}
+
+											{% endif %}
+
+										</a>
+
+
+									</div>
+
+
+									<div class="tribe-project-timesince">
+
+										<i class="fa fa-clock-o"></i> {{ item.project.project_timesince }} ago
+
+									</div>
+
+
+									<hr>
+
+									<div class="tribe-item-content">
+
+										<div class="project-title">
+
+											<a href="{{ item.project.get_absolute_url }}"><img src ='{% static "img/project-icon-3.png" %}' height="45px"/> "{{ item.project.title }}"</a>
+
+										</div>
+
+										<br>
+
+										{% if item.project.audio_file %}
+
+											<audio id="player" src="{{ item.project.audio_file.url }}" type="audio/mp3" controls="controls" preload="auto" name="{{ item.project.title }}"></audio>
+
+										{% endif %}
+
+										<br>
+										<br>
+
+										<div>{{ item.project.short_description }}</div>
+
+										<br>
+
+										{% if item.project.incomplete == True %}
+
+											<div class="tribe-project-incomplete">
+
+												<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Work In Progress
+
+											</div>
+
+										{% endif %}
+
+									</div><!-- Tribe-Item-Content End -->
+
+
+
+									<hr>
+
+									<div class="tribe-comment-all">
+
+										<a href="{{ item.project.get_absolute_url }}"><i class="fa fa-comment-o"></i> View Feedback</a>
+
+									</div>
+
+
+
+								</div><!-- Tribe-Project-End -->
+
+							</div><!-- Row End -->
+
+						</div><!-- Panel-Body End -->
+			  
+					</div><!-- Panel End -->
+
+				</div><!-- Tribe-Project-Container-End -->
+
+
+
+
+
+
+
+			{% elif item.item_type == 'Audio Inspiration' %}
+
+
+				<div class="tribe-project-container">
+
+
+
+					<div class="panel panel-default">
+							  
+						<div class="panel-body">
+
+							<div class="row">
+
+
+								<div class="tribe-project-content">
+
+									
+
+									<div class="tribe-project-user">
+
+										<a href="{{ user.profile.get_absolute_url }}">
+
+											{% if user.profile.get_thumbnail %}
+
+												<img src='{{ user.profile.get_thumbnail }}' class='tribe-profile-img img-circle'/> 
+
+												{% if item.user == request.user %}
+
+												Me
+
+												{% else %}
+
+												{{ item.user }}
+
+												{% endif %}
+
+											{% else %}
+
+												<img src ='{% static "img/avatar_default.jpg" %}' class ='tribe-profile-img img-circle' /> 
+
+												{% if item.user == request.user %}
+
+												Me
+
+												{% else %}
+
+												{{ item.user }}
+
+												{% endif %}
+
+											{% endif %}
+
+										</a>
+
+									</div>
+
+
+
+
+									<div class="tribe-project-timesince">
+
+										<i class="fa fa-clock-o"></i> {{ item.inspiration.audio_inspiration_timesince }} ago
+
+									</div>
+
+
+									<hr>
+
+
+									<div class="tribe-item-content">
+
+										<div class="project-title">
+
+											<a target="_blank" href="{{ item.inspiration.video }}">{{ item.inspiration.title }}</a>
+
+										</div>
+
+										<p>By {{ item.inspiration.artist }}</p> 
+
+										<br>
+
+										<div>
+
+											{% video item.inspiration.video '650x366' %}
+
+										</div>
+
+
+										<br>
+										<br>
+
+
+										<div>
+
+											{{ item.inspiration.comments }}
+
+										</div>
+
+
+										{% if item.user == request.user %}
+
+
+											<div class="tribe-feed-remove">
+
+												<hr>
+
+												<a href="{% url 'audio_inspiration_delete' item.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i> Remove</a>
+
+											</div>
+
+										{% endif %}
+										
+
+									</div><!-- Tribe-Item-Content End -->
+
+								</div><!-- Tribe-Project-End -->
+
+							</div><!-- Row End -->
+
+						</div><!-- Panel-Body End -->
+												  
+					</div><!-- Panel End -->
+
+				</div><!-- Tribe-Project-Container-End -->
+
+
+			{% endif %}
+
+
+		{% endfor %}
+
+
+
+		{% if items %}
+
+		<div class="tribe-feed-pagination">
+
+
+    		<div class="row">
+
+    			<div class="col-md-4">
+        
+			        {% if items.has_previous %}
+
+			            <a href="?page={{ items.previous_page_number }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+
+			        {% endif %}
+
+			    </div>
+
+
+			    <div class="col-md-4 tribe-feed-current">
+
+			        <span class="current">
+			            (Page {{ items.number }} of {{ items.paginator.num_pages }})
+			        </span>
+
+				</div>
+
+
+
+				<div class="col-md-4 tribe-feed-next">
+
+	        		{% if items.has_next %}
+	            		<a href="?page={{ items.next_page_number }}">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+	        		{% endif %}
+
+	        	</div>
+
+
+	        </div><!-- Row End -->
+
+		</div>
+
+		{% endif %}
+
+
+	
+
+
+	</div><!-- Col End -->
+
+
+</div><!-- Row End -->
+
+
+{% endblock %}

@@ -1,0 +1,1421 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+
+
+
+
+<script>
+$(document).ready(function(){
+	{% block jquery %}
+	$("#like").click(function(event){
+		event.preventDefault();
+		var request = $.ajax({
+			method: "POST",
+			url: "{{ instance.get_absolute_url }}",
+			data: {
+				instance_id: "{{ instance.id }}",
+				csrfmiddlewaretoken: "{{ csrf_token }}",
+			}
+		})
+		$('#like').fadeOut();
+		request.done(function(data){
+			console.log("working")
+		})
+	})
+
+
+	// $("#send-message").click(function(event){
+	// 	event.preventDefault();
+	// 	var request = $.ajax({
+	// 		method: "POST",
+	// 		url: "{{ instance.get_absolute_url }}",
+	// 		data: {
+	// 			testData: "Hello this is a test"
+	// 			instance_id: "{{ instance.id }}",
+	// 			csrfmiddlewaretoken: "{{ csrf_token }}",
+	// 		},
+	// 		success: function(data, textStatus, jqXHR){
+	// 			console.log(data)
+	// 			console.log(textStatus)
+	// 			console.log(jqXHR)
+	// 		},
+	// 		error: function(jqXHR, textStatus, errorThrown){
+	// 			console.log(jqXHR)
+	// 			console.log(textStatus)
+	// 			console.log(errorThrown)
+	// 		}
+	// 	})
+	// 	$('#send-message').fadeOut();
+	// 	request.done(function(data){
+	// 		console.log("working")
+	// 	})
+	// })
+
+
+
+
+	$("#b_edit_p").click(function(event){
+		event.preventDefault();
+		$('#feedback_b').hide();
+		$("#form_b").removeClass("hidden");
+		request.done(function(data){
+			console.log("working")
+		})
+	})
+
+	$("#b_edit_n").click(function(event){
+		event.preventDefault();
+		$('#feedback_b').hide();
+		$("#form_b").removeClass("hidden");
+		request.done(function(data){
+			console.log("working")
+		})
+	})
+
+	$("#a_edit_p").click(function(event){
+		event.preventDefault();
+		$('#feedback_a').hide();
+		$("#form_a").removeClass("hidden");
+		request.done(function(data){
+			console.log("working")
+		})
+	})
+
+	$("#a_edit_n").click(function(event){
+		event.preventDefault();
+		$('#feedback_a').hide();
+		$("#form_a").removeClass("hidden");
+		request.done(function(data){
+			console.log("working")
+		})
+	})
+
+
+
+
+    {% endblock jquery %}
+})
+
+
+
+// $(document).ready(function(){
+
+//     $('#like').click(function(){
+//     var catid;
+//     catid = $(this).attr("data-catid");
+//      $.get("{{ instance.get_absolute_url }}", {category_id: catid}, function(data){
+//                // $('#like_count').html(data);
+//                $('#likes').hide();
+//            });
+
+// });
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+{% block content %}
+
+
+
+<div class="row"><!-- Main Row -->
+
+
+    <div class="panel panel-default">
+		  
+	<div class="panel-body">
+
+
+
+	<!-- SESSION MEMBER -->
+
+
+		<div class="col-xs-12 col-sm-3 col-md-3">
+
+
+			<div class="session-members">
+		  		
+
+
+
+				{% if request.user == instance.user_b %}<!-- IF USER B -->
+
+				
+
+
+					{% if instance.user_a.profile.image %}<!-- User A Image -->
+
+						<a href="{{ instance.user_a.profile.get_absolute_url }}"><img src ='{{ instance.user_a.profile.get_thumbnail }}' class ='img-responsive img-circle session-members-img'/></a>
+			
+
+					{% else %}
+			
+						<a href="{{ instance.user_a.profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle session-members-img'/></a>
+
+		
+					{% endif %}
+
+
+					<!-- User A Name -->
+
+					<h3><a href="{{ instance.user_a.profile.get_absolute_url }}">{{ instance.user_a.profile.name }}</a></h3>
+
+
+
+					{% if instance.user_a.profile.location %}<!-- User A Location -->
+
+						<div class="session-members-location">
+
+							<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ instance.user_a.profile.location }}
+
+						</div>
+
+					{% endif %}
+
+
+
+					{% if feedback.user_a_positive_feedback and feedback.user_a_negative_feedback and feedback.user_b_positive_feedback and feedback.user_b_negative_feedback %}
+
+					<!-- Message Btn -->
+
+						<div class="session-chat-btn">
+
+							<a href="{% url 'session_chat' instance.id %}"><button class="btn btn-match btn-lg" type="button">
+										        	
+								<i class="fa fa-comment"></i> Message
+
+							</button></a>
+
+						</div>
+
+
+					{% endif %}
+
+
+
+					 <!-- User A Rating -->
+
+					 {% if instance.user_a.profile.reviewer_rating == "Top Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+					{% elif instance.user_a.profile.reviewer_rating == "Revered Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+					{% elif instance.user_a.profile.reviewer_rating == "Respected Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+					{% elif instance.user_a.profile.reviewer_rating == "Helpful Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+					{% elif instance.user_a.profile.reviewer_rating == "Liked Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star"></i></div>
+
+
+					{% elif instance.user_a.profile.reviewer_rating == "New Reviewer" %}
+
+						<div class="reviewer-rating"><i class="fa fa-star-o"></i></div>
+
+
+					{% endif %}
+
+					<h6>{{ instance.user_a.profile.reviewer_rating }}</h6>
+
+
+					<!-- End User A Rating -->
+
+
+					<div class="session-user-experience">
+
+							<div class="session-user-experience-icon"><i class="fa fa-music" aria-hidden="true"></i></div>
+
+							<h6>{{ instance.user_a.profile.experience }}</h6>
+
+					</div>
+
+
+
+					
+
+
+				<!-- End If User B -->
+
+				{% endif %}
+
+
+
+
+
+
+
+
+				{% if request.user == instance.user_a %}<!-- IF USER A -->
+
+				
+
+
+					{% if instance.user_b.profile.image %}
+
+						<a href="{{ instance.user_b.profile.get_absolute_url }}"><img src ='{{ instance.user_b.profile.get_thumbnail }}' class ='img-responsive img-circle session-members-img'/></a>
+
+					{% else %}
+
+						<a href="{{ instance.user_b.profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle session-members-img'/></a>
+
+					{% endif %}
+
+
+					<h3><a href="{{ instance.user_b.profile.get_absolute_url }}">{{ instance.user_b.profile.name }}</a></h3>
+
+		
+					{% if instance.user_b.profile.location %}
+
+						<div class="session-members-location">
+
+							<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ instance.user_b.profile.location }}
+
+						</div>
+
+					{% endif %}
+
+
+					{% if feedback.user_a_positive_feedback and feedback.user_a_negative_feedback and feedback.user_b_positive_feedback and feedback.user_b_negative_feedback %}
+
+					<!-- Message Btn -->
+
+						<div class="session-chat-btn">
+
+							<a href="{% url 'session_chat' instance.id %}"><button class="btn btn-match btn-md" type="button">
+										        	
+								<i class="fa fa-comment"></i> Message
+
+							</button></a>
+
+						</div>
+
+
+					{% endif %}
+
+
+
+
+		 			<!-- User B Rating -->
+
+					{% if instance.user_b.profile.reviewer_rating == "Top Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+						{% elif instance.user_b.profile.reviewer_rating == "Revered Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+						{% elif instance.user_b.profile.reviewer_rating == "Respected Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+						{% elif instance.user_b.profile.reviewer_rating == "Helpful Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+
+
+						{% elif instance.user_b.profile.reviewer_rating == "Liked Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star"></i></div>
+
+
+						{% elif instance.user_b.profile.reviewer_rating == "New Reviewer" %}
+
+							<div class="reviewer-rating"><i class="fa fa-star-o"></i></div>
+
+
+						{% endif %}
+
+
+					<h6>{{ instance.user_b.profile.reviewer_rating }}</h6>
+
+
+					<!-- End User B Rating -->
+
+
+
+					<div class="session-user-experience">
+
+							<div class="session-user-experience-icon"><i class="fa fa-music" aria-hidden="true"></i></div>
+
+							<h6>{{ instance.user_b.profile.experience }}</h6>
+
+					</div>
+
+
+
+					
+
+
+
+				<!-- End If User A -->
+
+				{% endif %}
+
+
+
+			</div><!-- End Session-Member -->
+
+
+
+		</div><!-- End Session-Member Col -->
+
+
+
+		<!-- END SESSION MEMBER -->
+
+
+
+
+
+
+
+
+
+
+		<!-- SESSION BODY -->
+
+
+  		<div class="col-xs-12 col-sm-9 col-md-9">
+
+
+  			<div class="session-container">
+
+
+
+ 				
+
+				{% if request.user == instance.user_a %}
+
+				<!-- IF USER A -->
+
+
+
+
+
+
+
+
+
+					<!-- Nav Tabs -->
+
+  	  				<ul class="nav nav-tabs" role="tablist">
+
+    					<li role="presentation" class="active"><a href="#user_b" aria-controls="user_b" role="tab" data-toggle="tab">{{ instance.user_b.profile.name }} </a></li>
+
+    					<li role="presentation"><a href="#user_a" aria-controls="user_a" role="tab" data-toggle="tab">My Project</a></li>
+
+
+    					<!-- {% if feedback.user_a_positive_feedback and feedback.user_a_negative_feedback and feedback.user_b_positive_feedback and feedback.user_b_negative_feedback %}
+
+    						<li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab"><i class="fa fa-comment-o"></i> Chat</a></li>
+
+    					{% endif %} -->
+
+  					</ul>
+
+
+
+
+					<div class="session-content">
+
+
+
+  						<!-- Tab Panes -->
+  						<div class="tab-content">
+
+
+
+	    					<!-- User B Tab -->
+
+	    					<div role="tabpanel" class="tab-pane fade in active" id="user_b">
+	    
+
+
+
+	    						<!-- User B Project -->
+
+	    						<div class="session-project">
+
+
+		    						<h2>{{ instance.project_b }}</h2>
+			
+
+									{% if instance.project_b.audio_file %}
+
+										<div class="session-audio">
+									
+											<audio id="player" src="{{ instance.project_b.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+										</div>
+			
+									{% endif %}
+
+
+
+									{% if instance.project_b.short_description %}
+
+										<div class="session-description">
+
+											{{ instance.project_b.short_description }}
+
+										</div>
+									
+									{% endif %}
+
+
+
+									<hr>
+
+								</div><!-- End Session Project -->
+								
+
+
+
+
+
+								<!-- User B Feedback -->
+
+								<div class="session-feedback">
+
+
+
+									{% if form_b %}
+
+
+										{% if not feedback.user_b_positive_feedback and not feedback.user_b_negative_feedback %}
+
+
+											<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+
+												<!-- {{ form_b|crispy }} -->
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-positive-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+												
+												{{ form_b.user_b_positive_feedback }}
+												</br>
+												</br>
+
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-change-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+
+												{{ form_b.user_b_negative_feedback }}
+												</br>
+												</br>
+												
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_b"/>
+
+											</form>
+
+
+										{% else %}
+
+
+											<!-- Submitted Feedback for User B  -->
+
+											<div id="feedback_b" >
+
+
+
+												<h4><img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-submit-icon"/> What do you like? <a href="#"><span id="b_edit_p" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+
+												<div class="session-feedback-editable">{{ feedback.user_b_positive_feedback }}</div>
+
+
+												<br>
+												<br>
+
+
+												<h4><img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-submit-icon"/> What would you suggest changing? <a href="#"><span id="b_edit_n" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+												
+												<div class="session-feedback-editable">{{ feedback.user_b_negative_feedback }}</div>
+										
+											</div>
+
+
+
+											<form id="form_b" method='POST' action'' enctype="multipart/form-data" class="hidden">{% csrf_token %}
+
+												<!-- {{ form_b|crispy }} -->
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-positive-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+												
+												{{ form_b.user_b_positive_feedback }}
+												</br>
+												</br>
+
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-change-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+
+												{{ form_b.user_b_negative_feedback }}
+												</br>
+												</br>
+												
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_b"/>
+
+											</form>
+
+
+										{% endif %}
+
+
+
+
+									{% else %}
+
+										
+
+										{% if feedback.user_b_positive_feedback and feedback.user_b_negative_feedback %}
+
+
+
+											<div class="session-feedback-positive">
+
+												<h4><img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-submit-icon"/> What do you like?</h4>
+												<p>{{ feedback.user_b_positive_feedback }}</p>
+
+											</div>
+
+
+											<div class="session-feedback-negative">
+
+												<h4><img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-submit-icon"/> What would you suggest changing?</h4>
+												{{ feedback.user_b_negative_feedback }}
+
+											</div>
+
+
+
+
+
+										    <!-- User B Like -->
+
+											{% if request.user == instance.user_b and feedback.user_b_like == False %}
+
+												<div class="session-feedback-like">
+
+
+													<button id="like" data-catid="{{ instance.id }}" class="btn btn-purple btn-lg" type="button">
+									        	
+									        			<span class="glyphicon glyphicon-thumbs-up"></span> Like Feedback
+
+									        		</button>
+
+									        	</div>
+									
+						
+											{% endif %}
+
+
+
+									    {% else %}
+
+									    	<!-- Waiting for Feedback from User A -->
+
+											<div class="no-feedback"><i class="fa fa-clock-o"></i> Waiting for feedback from {{ instance.user_a}}</div>
+
+
+									    {% endif %}
+									
+
+
+
+									{% endif %}
+
+
+								</div><!-- End Session Feedback -->
+
+
+							</div><!-- End User B -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<!-- User A -->
+
+						    <div role="tabpanel" class="tab-pane fade in" id="user_a">
+
+
+
+						    	<!-- User A Project -->
+
+	    						<div class="session-project">
+
+							    	<h2>{{ instance.project_a }}</h2>
+							
+					
+
+									{% if instance.project_a.audio_file %}
+
+										<div class="session-audio">
+
+											<audio id="player" src="{{ instance.project_a.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+										</div>
+
+									{% endif %}
+
+
+
+									{% if instance.project_a.short_description %}
+
+										<div class="session-description">
+
+											<p>{{ instance.project_a.short_description }}</p>
+
+										</div>
+									
+									{% endif %}
+
+
+									<hr>
+
+
+								</div><!-- End Session Project -->
+
+
+
+
+
+								<!-- User A Feedback -->
+
+								<div class="session-feedback">
+
+									{% if form_a %}
+
+										{% if not feedback.user_a_positive_feedback and not feedback.user_a_negative_feedback %}
+
+											<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+												<label>Your Experience Level</label>
+												{{ form_a.user_a_positive_feedback }}
+												<br>
+
+
+												<label>Your Experience Level</label>
+												{{ form_a.user_a_negative_feedback }}
+
+
+
+												<!-- {{ form_a|crispy }} -->
+											
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' />
+
+											</form>
+
+
+
+										{% else %}
+
+
+											<!-- Submitted Feedback for User A  -->
+
+											<div id="feedback_a" >
+
+
+												<h6><img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-submit-icon"/> What do you like? <a href="#"><span id="a_edit_p" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h6>
+												
+												<p>{{ feedback.user_a_positive_feedback }}</p>
+
+												<br />
+												<br />
+		
+
+												<h6><img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-submit-icon"/> What would you suggest changing? <a href="#"><span id="a_edit_n" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h6>
+							
+												<p>{{ feedback.user_a_negative_feedback }}</p>
+
+					
+											</div>
+
+
+											<form id="form_a" method='POST' action'' enctype="multipart/form-data" class="hidden">{% csrf_token %}
+
+
+												{{ form_a|crispy }}
+								
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_a"/>
+
+											</form>
+
+
+										{% endif %}
+
+
+
+									{% else %}
+
+
+
+										{% if feedback.user_a_positive_feedback and feedback.user_a_negative_feedback %}
+
+											
+
+											<div class="session-feedback-content">
+
+
+												<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="session-feedback-text">{{ feedback.user_a_positive_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+
+		 										<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="session-feedback-text">{{ feedback.user_a_negative_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+
+	 										</div><!-- Session Feedback Content -->
+
+
+
+
+											<!-- User A Like -->
+
+											{% if request.user == instance.user_a and feedback.user_a_like == False %}
+
+												<div class="session-feedback-like">
+
+													<button id="like" data-catid="{{ instance.id }}" class="btn btn-purple btn-lg" type="button">
+					        					
+					        							<i class="fa fa-thumbs-up" aria-hidden="true"></i> Appreciate Feedback
+					        						
+					        						</button>
+
+					        					</div>
+
+											{% endif %}
+
+
+
+
+
+										{% else %}
+
+											<!-- Waiting for Feedback from User B -->
+
+											<div class="no-feedback"><i class="fa fa-clock-o"></i> Waiting for Feedback from {{ instance.user_b}}</div>
+
+
+										{% endif %}
+
+
+									{% endif %}
+
+
+								</div><!-- End Session Feedback -->
+
+
+						    </div><!-- User A End -->
+
+
+
+						</div><!-- Panel-Body End -->
+		  
+					</div><!-- Panel End -->
+
+				</div>
+
+	    		</div><!-- Session-Content End -->
+
+				</div>
+
+
+				{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				{% if request.user == instance.user_b %}
+
+				<!-- IF USER B -->
+
+
+
+
+					<!-- Nav tabs -->
+
+  	  				<ul class="nav nav-tabs" role="tablist">
+
+    					<li role="presentation" class="active"><a href="#user_a" aria-controls="user_a" role="tab" data-toggle="tab">{{ instance.user_a.profile.name }} </a></li>
+
+    					<li role="presentation"><a href="#user_b" aria-controls="user_b" role="tab" data-toggle="tab">My Project</a></li>
+
+
+  					</ul>
+
+
+
+					<div class="session-content">
+
+
+  						<!-- Tab panes -->
+  						<div class="tab-content">
+
+
+
+
+
+
+
+	  						<!-- User A Tab -->
+	    					<div role="tabpanel" class="tab-pane fade in active" id="user_a">
+
+
+
+	    						<!-- User A Project -->
+	    						<div class="session-project">
+
+
+		    						<h2>{{ instance.project_a }}</h2>
+			
+
+									{% if instance.project_a.audio_file %}
+
+										<div class="session-audio">
+											
+											<audio id="player" src="{{ instance.project_a.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+										</div>
+										
+									{% endif %}
+
+
+
+									{% if instance.project_a.short_description %}
+
+										<div class="session-description">
+										
+											<p>{{ instance.project_a.short_description }}</p>
+
+										</div>
+			
+									{% endif %}
+
+		
+									<hr>
+
+
+								</div><!-- End Session Project -->
+
+
+
+
+
+
+
+
+
+								<!-- User A Feedback -->
+
+								<div class="session-feedback">
+
+
+									{% if form_a %}
+
+										{% if not feedback.user_a_positive_feedback and not feedback.user_a_negative_feedback %}
+
+											<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+												<!-- {{ form_a|crispy }} -->
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-positive-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+												
+												{{ form_a.user_a_positive_feedback }}
+												</br>
+												</br>
+
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-change-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+
+												{{ form_a.user_a_negative_feedback }}
+												</br>
+												</br>
+												
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_a"/>
+
+											</form>
+
+
+										{% else %}
+
+
+											<!-- Submitted Feedback for User A  -->
+
+
+											<div id="feedback_a" >
+											
+												<h4><img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-submit-icon"/> What do you like? <a href="#"><span id="a_edit_p" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+
+												<div class="session-feedback-editable">{{ feedback.user_a_positive_feedback }}</div>
+
+
+												<br>
+												<br>
+
+
+												<h4><img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-submit-icon"/> What would you suggest changing? <a href="#"><span id="a_edit_n" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+												
+												<div class="session-feedback-editable">{{ feedback.user_a_negative_feedback }}</div>
+
+
+											</div>
+
+
+											<form id="form_a" method='POST' action'' enctype="multipart/form-data" class="hidden">{% csrf_token %}
+
+
+												<!-- {{ form_a|crispy }} -->
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-positive-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+												
+												{{ form_a.user_a_positive_feedback }}
+												</br>
+												</br>
+
+
+												<div class="session-feedback-label">
+
+													<img src='{% static "img/feedback-change-45.png" %}' class="session-feedback-submit-icon"/>
+
+												</div>
+
+												{{ form_a.user_a_negative_feedback }}
+												</br>
+												</br>
+												
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_a"/>
+
+											</form>
+
+
+										{% endif %}
+
+
+
+
+									{% else %}
+
+
+
+										{% if feedback.user_a_positive_feedback and feedback.user_a_negative_feedback %}
+
+
+											<p><h4>What do you like?</h4></p>
+											<p>{{ feedback.user_a_positive_feedback }}</p>
+
+
+											<br />
+											<br />
+
+
+											<p><h4>What would you suggest changing?</h4></p>
+											{{ feedback.user_a_negative_feedback }}
+
+										
+											<!-- User A Like -->
+
+											{% if request.user == instance.user_a and feedback.user_a_like == False %}
+
+
+												<div class="session-feedback-like">
+
+
+													<button id="like" data-catid="{{ instance.id }}" class="btn btn-purple btn-lg" type="button">
+									        		
+									        			<span class="glyphicon glyphicon-thumbs-up"></span> Like Feedback
+									        		
+									        		</button>
+
+									        	</div>
+
+
+											{% endif %}
+
+
+										{% else %}
+
+											<!-- Waiting for Feedback from User B -->
+
+											<div class="no-feedback">
+
+												<i class="fa fa-clock-o"></i> Waiting for Feedback from {{ instance.user_b}}
+
+											</div>
+
+
+										{% endif %}
+									
+									{% endif %}
+
+
+								</div><!-- End Session Feedback -->
+
+
+	    					</div><!-- User A End -->
+
+
+
+
+
+ 
+
+						    <!-- User A Tab -->
+						    <div role="tabpanel" class="tab-pane fade in" id="user_b">
+
+
+						    	<!-- User B Project -->
+						    	<div class="session-project">
+						    
+
+						    		<h2>{{ instance.project_b }}</h2>
+
+							
+									{% if instance.project_b.audio_file %}
+
+										<div class="session-audio">
+
+											<audio id="player" src="{{ instance.project_b.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+										</div>
+							
+									{% endif %}
+
+					
+
+									{% if instance.project_b.short_description %}
+
+										<div class="session-description">
+
+											<p>{{ instance.project_b.short_description }}</p>
+
+										</div>
+									
+									{% endif %}
+
+		
+									<hr>
+
+
+								</div><!-- End Session Project -->
+
+
+
+
+
+
+
+								<!-- User B Feedback -->
+								<div class="session-feedback">
+
+
+									{% if form_b %}
+
+
+
+										{% if not feedback.user_b_positive_feedback and not feedback.user_b_negative_feedback %}
+
+											<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+												{{ form_b|crispy }}
+												
+												<br/>
+
+												<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' />
+
+											</form>
+
+
+										{% else %}
+
+
+										<!-- Submitted Feedback for User B  -->
+
+
+										<div id="feedback_b">
+											
+											<h4><img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-submit-icon"/> What do you like? <a href="#"><span id="b_edit_p" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+											
+											<p>{{ feedback.user_b_positive_feedback }}</p>
+
+											<br />
+											<br />
+
+											<h4><img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-submit-icon"/> What would you suggest changing? <a href="#"><span id="b_edit_n" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></h4>
+											
+											<p>{{ feedback.user_b_negative_feedback }}</p>
+
+
+										</div>
+
+
+										<form id="form_b" method='POST' action'' enctype="multipart/form-data" class="hidden">{% csrf_token %}
+
+											{{ form_b|crispy }}
+											
+											<br/>
+
+											<input class='btn btn-match btn-lg' type='submit' value='Give Feedback' name="form_b"/>
+
+										</form>
+
+
+
+										{% endif %}
+
+
+
+									{% else %}
+
+										
+										{% if feedback.user_b_positive_feedback and feedback.user_b_negative_feedback %}
+
+
+
+
+
+										<div class="session-feedback-content">
+
+
+												<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-positive-30-2.png" %}' class="session-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="session-feedback-text">{{ feedback.user_b_positive_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+
+		 										<div class="row">
+
+		 											<div class="col-xs-12 col-md-1">
+
+		 												<img src='{% static "img/feedback-change-30.png" %}' class="session-feedback-icon"/>
+
+		 											</div>
+
+
+		 											<div class="col-xs-12 col-md-11">
+
+		 												<div class="session-feedback-text">{{ feedback.user_b_negative_feedback }}</div>
+
+		 											</div>
+
+		 										</div>
+
+
+	 										</div><!-- Session Feedback Content -->
+
+
+
+						
+
+	    									<!-- User B Like -->
+
+											{% if request.user == instance.user_b and feedback.user_b_like == False %}
+
+												<div class="session-feedback-like">
+
+
+													<button id="like" data-catid="{{ instance.id }}" class="btn btn-purple btn-lg" type="button">
+
+										        		<i class="fa fa-thumbs-up" aria-hidden="true"></i> Appreciate Feedback
+										       
+										        	</button>
+
+										        </div>
+
+											{% endif %}
+
+
+
+
+	    								{% else %}
+
+	    									<!-- Waiting for Feedback from User A -->
+
+											<div class="no-feedback">
+
+												<i class="fa fa-clock-o"></i> Waiting for Feedback from {{ instance.user_a}}
+
+											</div>
+
+
+	    								{% endif %}
+		
+
+									{% endif %}
+
+
+								</div><!-- End Session Feedback -->
+
+
+							</div><!-- User B End -->
+
+
+
+
+						   
+
+
+
+						</div><!-- Panel-Body End -->
+		  
+					</div><!-- Panel End -->
+
+				</div>
+
+	    	</div><!-- Session-Content End -->
+
+		</div>
+
+
+	{% endif %}
+
+
+
+
+
+
+
+
+ </div><!-- End Session Container -->
+  		
+</div><!-- End Session Container Col -->
+
+
+
+
+
+</div><!-- End Main Row -->
+
+{% endblock %}

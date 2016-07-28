@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+	<!-- Panel -->
+
+	<div class="panel panel-default">
+		  
+
+		<!-- Panel Body -->
+
+		<div class="panel-body">
+
+
+			<div class="row">
+
+
+				<div class="session-chat-container">
+
+
+					<div class="col-xs-12 col-md-10 col-sm-offset-1">
+
+
+						<div class="session-chat-to-user">
+
+
+							<a href="{{ to_user.profile.get_absolute_url }}"><img src='{{ to_user.profile.get_thumbnail }}' class='session-chat-to-user-img img-circle'>
+
+
+							<h2>{{ to_user }}</h2></a>
+
+		
+
+						</div><!-- End To-User -->
+
+
+
+						<div class="session-chat-messages">
+
+
+							
+
+
+							{% for message in messages %}
+
+								<div class="session-message">
+
+
+
+									<div class="session-message-user">
+
+
+										<a href="{{ message.user.profile.get_absolute_url }}">
+
+
+										{% if message.user.profile.get_thumbnail %}
+
+											<h5><img src='{{ message.user.profile.get_thumbnail }}' class='session-chat-profile-img img-circle'>
+
+											{% if message.user == request.user %}
+
+											 	Me</h5></a>
+
+											{% else %}
+
+											 	{{ message.user }}</h5></a>
+
+											{% endif %}
+
+
+										{% else %}
+
+											<h4><img src='{% static "img/avatar_default.jpg" %}' class='session-chat-profile-img img-circle'>
+
+
+											{% if message.user == request.user %}
+
+											 	Me</h5></a>
+
+											{% else %}
+
+											 	{{ message.user }}</h5></a>
+
+											{% endif %}
+
+
+										{% endif %}
+
+									</div>
+
+
+
+									<div class="session-message-content">
+
+						    			<h6>{{ message.message }}</h6>
+
+						    		</div>
+
+
+						    		<div class="session-message-created">
+
+						    			{{ message.created }}
+
+						    		</div>
+
+
+						    	</div><!-- Session Message End -->
+
+						    	<hr>
+
+
+							{% endfor %}
+
+
+							<div class="session-send-message">
+
+
+								<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+
+									{{ chat_message_form|crispy }}
+
+									<input class='btn btn-match btn-lg' type='submit' value='Send Message' name="chat_message"/>
+
+								</form>
+
+							</div>
+
+
+
+						</div><!-- End Session-Chat-Messages -->
+
+
+						<div class="session-chat-back">
+
+							<a href="{% url 'get_session' instance.id %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back to Session</a>
+
+						</div>
+
+
+					</div><!-- End Col -->
+
+
+				</div><!-- End Session-Chat-Contaner -->
+
+			</div><!-- End Row -->
+
+
+
+
+		</div><!-- Panel-Body End -->
+		  
+	</div><!-- Panel End -->
+
+</div><!-- End Main Row -->
+
+{% endblock %}

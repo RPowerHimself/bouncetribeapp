@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+
+  	<div class="col-xs-12 col-sm-9 col-md-9">
+
+
+  		<div class="panel panel-default">
+		  
+			<div class="panel-body">
+		
+				<div class="subtribe-upload-container">
+
+
+					<div class="new-project" id='preview-title'>
+
+						My Project
+
+					</div>
+
+
+
+
+		  			<form method='POST' action'' id='get_matched_form' enctype="multipart/form-data">{% csrf_token %}
+
+		  			<!-- {{ form|crispy }}
+					<br/> -->
+
+
+						{% if form.errors %}
+    		
+    						{% for field in form %}
+        	
+        						{% for error in field.errors %}
+            
+           							<div class="form-error"><strong>{{ error|escape }}</strong></div>
+
+        						{% endfor %}
+
+    						{% endfor %}
+
+
+    						{% for error in form.non_field_errors %}
+
+        						<div><strong>{{ error|escape }}</strong></div>
+    						
+    						{% endfor %}
+
+						{% endif %}
+
+
+						
+						<label>Select Your Audio File (15MB Max)</label>
+						{{ form.audio_file }}
+						</br>
+						</br>
+
+						<label>Title</label>
+						{{ form.title }}
+						</br>
+						</br>
+
+						<label>Describe Your Project</label>
+						{{ form.short_description }}
+						</br>
+						</br>
+
+
+						<input class='btn btn-success btn-lg' type='submit' value='Upload Project' />
+
+						</br>
+
+					</form>
+
+
+				</div><!-- Getfeedback-Content End -->
+
+		 	</div><!-- Panel-Body End -->
+		  
+
+		</div><!-- Panel End -->
+
+
+	</div><!-- Col End -->
+
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

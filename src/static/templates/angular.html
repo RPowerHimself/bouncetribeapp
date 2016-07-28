@@ -1,0 +1,61 @@
+<div ng-app="myApp">
+
+									<div ng-controller='mainController'>
+
+		    							<h1>Hello [[ chat.user ]]</h1>
+
+		    							<div>
+
+		    								<label>What is your handle?</label>
+		    								<input type="text" ng-model="handle" />
+
+		    							</div>
+
+		    							<hr>
+
+		    							<h3>twitter.com/[[ handle ]]</h3>
+
+		    							<h3>twitter.com/[[ lowercasehandle() ]]</h3>
+
+		    							<div class="alert" ng-class="{ 'alert-warning': handle.length < characters, 'alert-danger': handle.length > characters, 'alert-success': handle.length === characters}">
+
+
+			    							<div ng-show="handle.length < characters">
+
+			    								You have less than 5 characters!
+
+			    							</div>
+
+			    							<div ng-show="handle.length > characters">
+
+			    								You have more than 5 characters!
+
+			    							</div>
+
+			    							<div ng-show="handle.length === characters">
+
+			    								You have 5 characters!
+
+			    							</div>
+
+		    							</div>
+
+		    							<div>
+
+		    								<ul>
+		    									<li ng-model="chat">
+
+		    										[[ chat.user ]]
+
+		    									</li>
+		    								</ul>
+
+		    							</div>
+
+		    							
+
+
+
+		    						</div>
+
+		    						</div> <!-- My App End -->

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-xs-12 col-sm-9 col-md-9">
+
+<div class="panel panel-default">
+		  
+<div class="panel-body">
+
+<div class="notification-container">
+
+
+
+
+
+{% if instance.notification_type = "User Match" %}
+
+
+<h2><i class="fa fa-user"></i> {{ instance.title }}</h2>
+
+<br>
+
+
+<p>{{ instance.text }} <a href="{{ instance.from_user.profile.get_absolute_url }}">{{ instance.from_user }}</a></p>
+
+<br>
+
+<a href="{{ instance.session.get_absolute_url }}"><button class="btn btn-success btn-lg" type="button">View Session
+</button></a>
+
+
+
+{% elif instance.notification_type = "Feedback Received" %}
+
+
+<h2><i class="fa fa-bolt"></i> {{ instance.title }}</h2>
+
+<br>
+
+
+<p>{{ instance.text }} <a href="{{ instance.from_user.profile.get_absolute_url }}">{{ instance.from_user }}</a></p>
+
+<br>
+
+<a href="{{ instance.session.get_absolute_url }}"><button class="btn btn-success btn-lg" type="button">View Session
+</button></a>
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+</div><!-- Notification Container End -->
+
+</div><!-- Panel-Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

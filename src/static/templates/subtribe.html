@@ -1,0 +1,513 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load friendshiptags %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+	<!-- Panel -->
+	<div class="panel panel-default">
+		  
+
+		<!-- Panel Body -->
+		<div class="panel-body">
+
+
+			<div class="subtribe-content">
+
+
+
+				<div class="row">
+
+
+					<div class='col-sm-10 col-md-10 col-md-offset-1'>
+
+
+						<div class="subtribe-header">
+
+							<div class="row">
+
+
+								<div class='col-md-10'>
+
+									<h2>{{ instance.name }}</h2>
+
+								</div>
+
+
+
+								
+
+							</div>
+
+						</div>
+
+
+
+						<!-- Nav tabs -->
+  						<ul class="nav nav-tabs" role="tablist">
+    						
+    						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-music" aria-hidden="true"></i> Activity</a></li>
+    						<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-users" aria-hidden="true"></i> Members</a></li>
+
+  						</ul>
+
+
+
+
+  						<!-- Tab panes -->
+  						<div class="tab-content">
+
+
+
+
+
+    						<!-- Activity Pane -->
+    						<div role="tabpanel" class="tab-pane active" id="home">
+
+
+
+								<div class="subtribe-upload-btn">
+
+										<a href="{% url 'subtribe_upload_project' instance.id %}"><button class="btn btn-success btn-md find-friends-btn" type="button">
+	        							<i class="fa fa-cloud-upload"></i> Upload Project</button><a/>
+
+	        					</div>
+
+
+
+								<div class="subtribe-body">
+
+
+									<!-- SubTribe Projects -->
+
+										<div class="subtribe-feed-projects">
+
+
+									{% if projects %}
+
+
+											{% for project in projects %}
+
+
+												<div class="subtribe-feed-project">
+
+
+
+													<div class="subtribe-feed-project-user">
+
+
+														<a href="{{ project.user.profile.get_absolute_url }}">
+
+																{% if project.user.profile.get_thumbnail %}
+
+																	<img src='{{ project.user.profile.get_thumbnail }}' class='tribe-profile-img img-circle'/> {{ project.user }}
+
+																{% else %}
+
+																	<img src ='{% static "img/avatar_default.jpg" %}' class ='tribe-profile-img img-circle'/> {{ project.user }}
+
+																{% endif %}
+
+														</a>
+
+													</div>
+
+
+
+													<div class="tribe-project-timesince">
+
+														<i class="fa fa-clock-o"></i> {{ project.subtribe_audio_project_timesince }} ago
+
+													</div>
+
+
+													<hr>
+
+
+													<div class="tribe-item-content">
+
+														<div class="project-title">
+
+															<a href=""><img src ='{% static "img/audioproject_icon50.png" %}' height="40px"/> "{{ project.title }}"</a>
+
+														</div>
+
+														<br>
+
+														{% if project.audio_file %}
+
+															<audio id="player" src="{{ project.audio_file.url }}" type="audio/mp3" controls="controls" preload="auto" name="{{ project.title }}"></audio>
+
+														{% endif %}
+
+														<br>
+														<br>
+
+														{% if project.short_description %}
+
+															<div>{{ project.short_description }}</div>
+
+															<br>
+
+														{% endif %}
+
+													</div><!-- Tribe-Item-Content End -->
+
+
+
+
+												</div><!-- End Subtribe-Feed-Project -->
+
+
+											{% endfor %}
+
+
+
+
+										
+
+									{% endif %}
+
+
+									</div><!-- End Subtribe-Feed-Projects -->
+
+
+							</div><!-- End SubTribe-Body -->
+
+
+
+    						</div><!-- End Activity Pane -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    						<!-- Members Pane -->
+    						<div role="tabpanel" class="tab-pane" id="profile">
+
+
+    							
+
+								<div class="subtribe-body">
+
+
+									<div class="subtribe-members">
+
+
+
+										<table class="table table-hover table-responsive">
+
+										<thead>
+											<tr>
+												<th></th>
+												<th>Name</th>
+												<th style="text-align: center;">Location</th>
+												<th style="text-align: center;">Rating</th>
+												<th style="text-align: center;">Projects Shared</th>
+											</tr>
+										</thead>
+
+
+										<!-- Leader Row -->
+										<tr>
+											<td>
+
+												{% if leader.profile.get_thumbnail %}
+													<a href="{{leader.profile.get_absolute_url}}"><img src='{{ leader.profile.get_thumbnail }}' class='img-responsive img-circle tribe-img'/></a>
+
+												{% else %}
+													<a href="{{ leader.profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle tribe-img'/></a>
+															
+												{% endif %}
+
+
+											</td>
+
+
+											<td style="vertical-align: middle;"><a href="{{leader.profile.get_absolute_url}}">{{ leader }} (Leader)</a></td>
+											<td style="text-align: center; vertical-align: middle;">{{ leader.profile.location }}</td>
+
+											<td style="text-align: center; vertical-align: middle;">
+
+												{% if leader.profile.reviewer_rating == "Top Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif leader.profile.reviewer_rating == "Revered Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif leader.profile.reviewer_rating == "Respected Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif leader.profile.reviewer_rating == "Helpful Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif leader.profile.reviewer_rating == "Liked Reviewer" %}
+
+													<i class="fa fa-star"></i>
+
+
+												{% elif leader.profile.reviewer_rating == "New Reviewer" %}
+
+													<i class="fa fa-star-o"></i>
+
+												{% endif %}
+
+											</td>
+
+
+
+
+											<td style="text-align: center; vertical-align: middle;">{{ leader.profile.get_total_project }}</td>
+
+
+										</tr>
+
+
+
+
+										<!-- Members -->
+										{% for member in members %}
+
+										<tr>
+											<td>
+
+												{% if member.get_thumbnail %}
+													<a href="{{member.get_absolute_url}}"><img src='{{ member.get_thumbnail }}' class='img-responsive img-circle tribe-img'/></a>
+
+												{% else %}
+													<a href="{{ member.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle tribe-img'/></a>
+															
+												{% endif %}
+
+											</td>
+
+											<td style="vertical-align: middle;"><a href="{{member.get_absolute_url}}">{{ member }}</a></td>
+											<td style="text-align: center; vertical-align: middle;">{{ member.location }}</td>
+
+											<td style="text-align: center; vertical-align: middle;">
+
+
+												{% if member.reviewer_rating == "Top Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif member.reviewer_rating == "Revered Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif member.reviewer_rating == "Respected Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif member.reviewer_rating == "Helpful Reviewer" %}
+
+													<i class="fa fa-star"></i> <i class="fa fa-star"></i>
+
+
+												{% elif member.reviewer_rating == "Liked Reviewer" %}
+
+													<i class="fa fa-star"></i>
+
+
+												{% elif member.reviewer_rating == "New Reviewer" %}
+
+													<i class="fa fa-star-o"></i>
+
+												{% endif %}
+
+											</td>
+
+
+
+
+											<td style="text-align: center; vertical-align: middle;">{{ member.get_total_project }}</td>
+
+
+										</tr>
+
+										{% endfor %}
+
+									</table>
+
+
+
+
+									</div><!-- End SubTribe-Members -->
+
+
+
+
+								{% if member_check %}
+
+									<div class="subtribe-leave">
+
+											<a href="{% url 'subtribe_leave' instance.id %}"><button name="leave" class="btn btn-gray-sm">
+												<i class="fa fa-sign-out" aria-hidden="true"></i> Leave
+											</button><a/>
+
+									</div>
+
+								{% endif %}
+
+
+
+
+								{% if request.user == leader %}
+
+
+										<div class="subtribe-edit">
+
+											<a href="{% url 'subtribe_edit' instance.id %}"><button class="btn btn-success btn-md find-friends-btn" type="button">
+		        							<i class="fa fa-cog"></i> Manage Subtribe</button>
+
+		        						</div>
+
+
+									{% endif %}
+			
+
+								
+
+
+							</div><!-- End SubTribe-Body -->
+
+
+    					</div><!-- End Members Pane -->
+
+
+
+
+
+
+  						
+
+
+  						</div><!-- End Tab panes -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							
+
+
+
+
+
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</div><!-- Col End End -->
+
+
+				</div><!-- Row End End -->
+
+
+			</div><!-- Subtribe-Content End -->
+
+
+		</div><!-- Panel Body End -->
+		  
+	</div><!-- Panel End -->
+
+
+</div><!-- Row End -->
+
+
+{% endblock %}

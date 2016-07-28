@@ -1,0 +1,97 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class='col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3'>
+
+<div class="panel panel-default">
+      
+<div class="panel-body">
+
+<div class="login-content">
+
+
+<!-- <h1>{% trans "Login" %}</h1> -->
+<div class="login-logo"><img src='{% static "img/login-logo-1.png" %}' class="img-responsive account-signup-logo"/></div>
+
+  <br>
+
+
+
+<!-- {% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Login with Facebook or <a href="{{ signup_url }}">Sign Up here</a>{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul> -->
+
+<!--   <div class="login-or">{% trans 'or' %}</div> -->
+
+
+
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}Need an account?
+<a href="{{ signup_url }}">Sign Up Here</a>{% endblocktrans %}</p>
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+
+
+<div id="div_id_login" class="form-group">
+
+<label for="id_login" class="control-label  requiredField">Username or Email<span class="asteriskField">*</span> </label> <div class="controls "> <input autofocus="autofocus" class="textinput textInput form-control" id="id_login" name="login" placeholder="Your Username or E-mail" type="text" /> </div> </div> 
+
+<div id="div_id_password" class="form-group"> <label for="id_password" class="control-label  requiredField">Password<span class="asteriskField">*</span> </label> <div class="controls ">
+
+<input type="password" class="textinput textInput form-password" id="id_password" name="password" placeholder="Your Password"/> </div> </div> 
+
+<div class="form-group"> <div id="div_id_remember" class="checkbox"> <label for="id_remember" class=""> <input class="checkboxinput" id="id_remember" name="remember" type="checkbox" /> Remember Me</label>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <br/>
+  <button class="btn btn-block btn-match btn-lg" type="submit">{% trans "Sign In" %}</button>
+</form>
+
+<br>
+<a href="{{ signup_url }}"><button class="btn btn-block btn-purple btn-lg">{% trans "Create Account" %}</button></a>
+
+<div class="login-options"><a  href="{% url 'account_reset_password' %}">{% trans "Forgot Your Password?" %}</a></div>
+
+
+</div><!-- Login-Content End -->
+
+</div><!-- Panel-Body End -->
+      
+</div><!-- Panel End -->
+
+</div><!-- Row End -->
+
+{% endblock %}

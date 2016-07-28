@@ -1,0 +1,533 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+<!-- Panel -->
+
+<div class="panel panel-default">
+		  
+
+<!-- Panel Body -->
+
+<div class="panel-body">
+
+<div class="profile-container">
+
+
+
+	
+
+
+
+<!-- Profile Header -->
+
+<div class="row">
+
+<div class="col-xs-12 col-md-9">
+
+
+	<div class="profile-header">
+
+
+		<div class="row">
+
+
+			<div class="col-md-3 col-xs-12">
+
+
+				<div class="profile-img">
+
+
+					
+					<a href="{% url 'settings' %}">
+
+
+						{% if profile.image %}
+
+							<img src ='{{ profile.get_thumbnail }}' class ='img-responsive img-circle'/>
+
+
+						{% else %}
+
+							<img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle'/>
+
+
+						{% endif %}
+
+
+					</a>
+
+				</div>
+
+			</div>	
+
+
+
+			<div class="col-md-9 col-xs-12">
+
+
+				<div class="profile-header-content">
+
+
+					<h1>{{ profile.name }}</h1>
+
+
+					<!-- Profile Rating -->
+
+					<div class="profile-rating">
+
+
+						{% if profile.reviewer_rating == "Top Reviewer" %}
+
+							<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% elif profile.reviewer_rating == "Revered Reviewer" %}
+
+							<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% elif profile.reviewer_rating == "Respected Reviewer" %}
+
+							<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% elif profile.reviewer_rating == "Helpful Reviewer" %}
+
+							<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% elif profile.reviewer_rating == "Liked Reviewer" %}
+
+							<h6><i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% elif profile.reviewer_rating == "New Reviewer" %}
+
+							<h6><i class="fa fa-star-o"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+						{% endif %}
+
+
+					</div><!-- End Profile Rating -->
+
+
+				
+
+				</div><!-- End Profile Header Content -->
+
+
+
+
+
+				<!-- Profile Stats -->
+
+			  	<div class="profile-stats">
+
+
+			  		<div class="row">
+
+
+						<div class="col-xs-12 col-md-2">
+
+							<h3><i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ profile.total_likes }}</h3>
+							
+						</div>
+
+
+						<div class="col-xs-12 col-md-2">
+
+							<h3><i class="fa fa-users" aria-hidden="true"></i> {{ tribe_members }}</h3>
+
+						</div>
+
+
+						<div class="col-xs-12 col-md-2">
+
+			  				<h3><span class="glyphicon glyphicon-file" aria-hidden="true"></span>  {{ total_projects }}</h3>
+
+						</div>
+
+
+
+
+					</div><!-- End Profile Stats Row -->
+
+
+
+
+				</div><!-- End Profile Stats -->
+
+
+
+
+
+			</div><!-- End Profile Header Content Col -->
+
+
+		</div><!-- End Profile Header Row -->
+
+
+	</div><!-- End Profile Header -->
+
+
+
+</div><!-- End Profile Header Col -->
+
+</div><!-- End Profile Header Row -->
+
+
+
+<hr>
+
+
+
+<!-- Profile Body -->
+
+<div class="profile-body">
+
+
+
+<div class="row">
+
+
+
+<!-- LEFT COL -->
+
+
+	<div class="col-xs-12 col-md-7"><!-- Profile Body Left Col -->
+
+
+		<div class="profile-body-left">
+
+
+			{% if profile.bio %}
+
+				<h4><i class="fa fa-user" aria-hidden="true"></i> Summary</h4>
+
+				<div class="profile-bio">
+
+					<h6>{{ profile.bio }}</h6>
+
+				</div>
+
+			{% endif %}
+
+
+			{% if profile.influences %}
+
+
+				<div class="profile-influences">
+
+					<h4><i class="fa fa-music" aria-hidden="true"></i> Influences</h4>
+
+					<h6>{{ profile.influences }}</h6>
+
+				</div>
+
+
+			{% endif %}
+
+
+
+
+
+		</div><!-- End Profile Body Left -->
+
+
+	</div><!-- End Profile Body Left Col -->
+
+
+
+
+
+
+<!-- RIGHT COL -->
+
+
+	<div class="col-xs-12 col-md-5"><!-- Profile Body Right Col -->
+
+
+		<div class="profile-body-right">
+
+			<div class="profile-experience">
+
+
+				<h6><i class="fa fa-music" aria-hidden="true"></i> {{ profile.experience }}</h6>
+
+			</div>
+
+
+			{% if profile.location %}
+
+				<h6><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{ profile.location }}</h6>
+			
+			{% endif %}
+
+
+			{% if profile.email %}
+
+				<h6><i class="fa fa-envelope" aria-hidden="true"></i><a target="_blank" href="mailto:{{ profile.email }}"> {{ profile.email }}</a></h6>
+
+			{% endif %}
+
+
+			{% if profile.website %}
+
+				<h6><i class="fa fa-link" aria-hidden="true"></i> {{ profile.website|urlize }}</h6>
+
+
+
+			{% endif %}
+
+
+
+			<!-- Profile Rating -->
+
+			<div class="profile-rating">
+
+
+			{% if profile.reviewer_rating == "Top Reviewer" %}
+
+				<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% elif profile.reviewer_rating == "Revered Reviewer" %}
+
+				<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% elif profile.reviewer_rating == "Respected Reviewer" %}
+
+				<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% elif profile.reviewer_rating == "Helpful Reviewer" %}
+
+				<h6><i class="fa fa-star"></i> <i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% elif profile.reviewer_rating == "Liked Reviewer" %}
+
+				<h6><i class="fa fa-star"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% elif profile.reviewer_rating == "New Reviewer" %}
+
+				<h6><i class="fa fa-star-o"></i> ({{ profile.reviewer_rating }})</h6>
+
+
+			{% endif %}
+
+			<div class="progress">
+					
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ profile.reviewer_progress }}%;"></div>
+
+			</div>
+
+			</div><!-- End Profile Rating -->
+
+
+
+		</div><!-- End Profile Body Right -->
+
+
+	</div><!-- End Profile Body Right Col -->
+
+
+
+</div><!-- End Profile Body Row -->
+
+</div><!-- End Profile Body -->
+
+
+
+
+
+
+
+
+			{% if projects %}
+
+			<!-- CURRENT PROJECT -->
+			
+
+				<div class="profile-recent-projects">
+
+
+					<h3><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Current Project</h3>
+
+
+
+					<div class="row">
+
+
+						<div class="col-xs-12 col-md-7"><!-- Profile Recent Project LEFT COL -->
+
+							<div class="profile-recent-project-container">
+
+
+								<div class="panel panel-default"><!-- Panel -->
+			  
+								<div class="panel-body"><!-- Panel Body -->
+
+
+									<div class="profile-recent-project-content">
+
+
+										<h2><a href="{{current_project.get_absolute_url}}"><img src ='{% static "img/project-icon-3.png" %}' class="profile-project-icon" /></a>
+
+										<a href="{{current_project.get_absolute_url}}"> "{{ current_project.title }}"</a></h2>
+
+										{% if current_project.audio_file %}
+
+											<div class="profile-project-audio">
+
+												<audio id="player" src="{{ current_project.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+											</div>
+							
+										{% endif %}
+
+										{% if current_project.short_description %}
+
+											<h6>{{ current_project.short_description }}</h6>
+
+										{% endif %}
+
+
+									</div><!-- End Profile Recent Project Content -->
+
+
+								</div><!-- End Panel Body -->
+
+								</div><!-- End Panel -->
+
+							</div><!-- End Profile Recent Project Container -->
+
+						</div><!-- End Profile Recent Project LEFT COL -->
+
+
+
+
+
+
+
+
+					</div><!-- End Profile Recent Projects Row -->
+
+
+
+
+					
+
+
+				</div><!-- End Profile Recent Projects -->
+
+			
+			{% endif %}
+
+
+
+
+
+
+
+			{% if profile.featured_project %}
+
+			<!-- FEATURED PROJECT -->
+
+
+
+
+				<div class="profile-recent-projects">
+
+
+					<h3><i class="fa fa-music" aria-hidden="true"></i> Featured Track</h3>
+
+
+
+					<div class="row">
+
+
+						<div class="col-xs-12 col-md-7"><!-- Profile Recent Project LEFT COL -->
+
+							<div class="profile-recent-project-container">
+
+
+								<div class="panel panel-default"><!-- Panel -->
+			  
+								<div class="panel-body"><!-- Panel Body -->
+
+
+									<div class="profile-recent-project-content">
+
+										{% if profile.featured_project.title  %}
+											<h2><img src ='{% static "img/project-icon-3.png" %}' class="profile-project-icon" /> "{{ profile.featured_project.title }}"</h2>
+
+										{% else %}
+											<h3><img src ='{% static "img/project-icon-3.png" %}' class="profile-project-icon" /> "Untitled"</h3>
+
+										{% endif %}
+
+
+										{% if profile.featured_project.audio_file %}
+
+											<div class="profile-project-audio">
+
+												<audio id="player" src="{{ profile.featured_project.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+											</div>
+							
+										{% endif %}
+
+
+									</div><!-- End Profile Featured Project Content -->
+
+
+								</div><!-- End Panel Body -->
+
+								</div><!-- End Panel -->
+
+							</div><!-- End Profile Featured Project Container -->
+
+						</div><!-- End Profile Featured Project LEFT COL -->
+
+
+
+					</div><!-- End Profile Featured Projects Row -->
+
+
+
+
+					
+
+				</div><!-- End Profile Featured Projects -->
+
+			
+			{% endif %}
+
+
+
+
+
+
+
+
+
+</div><!-- End Profile Container -->
+
+</div><!-- Panel Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Row End -->
+
+
+{% endblock %}

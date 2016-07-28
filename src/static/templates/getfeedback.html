@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+<script>
+$(document).ready(function(){
+	{% block jquery %}
+
+$('#img2').mouseover(function() {
+  $(this).fadeTo(250, 1);
+});
+
+	{% endblock jquery %}
+})
+
+</script>
+
+
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+
+<div class="col-xs-12 col-sm-12 col-md-12">
+
+
+<div class="panel panel-default">
+		  
+<div class="panel-body">
+		
+<div class="getfeedback-buttons">
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6">
+
+<a href="{% url 'new_match_project' %}"><img src ='{% static "img/feedback-getmatched-btn.png" %}'/></a>
+
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-6">
+
+{% if display_tribe == True %}
+
+<a href="{% url 'new_tribe_project' %}"><img src ='{% static "img/feedback-tribe-btn.png" %}' /></a>
+
+{% else %}
+
+<a href="{% url 'tribe' %}"><img src ='{% static "img/feedback-tribe-inactive-btn.png" %}' /></a>
+
+{% endif %}
+
+</div>
+
+
+
+
+
+
+
+<br>
+<br>
+
+
+
+</div><!-- Getfeedback-Buttons End -->
+
+
+
+{% if not matched_projects and not tribe_projects %}
+
+
+<div class="no-matches">No Projects Added</div>
+
+
+{% endif %}
+
+
+
+
+<div class="my-project-content">
+
+
+
+<!-- Matched Projects -->
+
+{% if matched_projects %}
+
+<hr>
+
+
+<table class="table table-hover table-responsive" >
+
+<thead>
+<tr>
+<th>Matched Project</th>
+<th style="text-align: center;">Genre</th>
+<th style="text-align: center;">Matches</th>
+<th style="text-align: center;">Uploaded</th>
+<th style="text-align: center;">Queued</th>
+
+
+
+</tr>
+</thead>
+
+
+{% for project in matched_projects %}
+
+<tr>
+<td><a href="{{project.get_absolute_url}}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> {{ project }}</a></td>
+<td style="text-align: center;">{{ project.genre }}</td>
+<td style="text-align: center;">{{ project.get_matches_count }}</td>
+<td style="text-align: center;">{{ project.project_timesince }} ago</td>
+<td style="text-align: center;">
+
+{% if project.queued = True %}
+<i class="fa fa-clock-o"></i>
+{% else %}
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+<hr>
+<br>
+
+
+{% endif %}
+
+
+<!-- Tribe Projects -->
+
+
+{% if tribe_projects %}
+
+
+<table class="table table-hover table-responsive" >
+
+<thead>
+<tr>
+<th>Tribe Project</th>
+<th style="text-align: center;">Genre</th>
+<th style="text-align: center;">Feedback</th>
+<th style="text-align: center;">Uploaded</th>
+<th style="text-align: center;">Work In Progress</th>
+
+
+
+</tr>
+</thead>
+
+
+{% for project in tribe_projects %}
+
+<tr>
+<td><a href="{{project.get_absolute_url}}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> {{ project }}</a></td>
+<td style="text-align: center;">{{ project.genre }}</td>
+<td style="text-align: center;">{{ project.get_matches_count }}</td>
+<td style="text-align: center;">{{ project.audio_project_timesince }} ago</td>
+<td style="text-align: center;">
+
+{% if project.incomplete = True %}
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
+{% else %}
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+</div><!-- My-Project-Content End -->
+
+
+
+
+
+
+</div><!-- Panel-Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Col End -->
+
+
+
+
+
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}

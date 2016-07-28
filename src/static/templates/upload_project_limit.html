@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-9 col-md-9">
+
+		<div class="panel panel-default">
+		  
+			<div class="panel-body">
+
+
+				<div class="project-content">
+
+
+					<h2>Number of Projects Exceeded!</h2>
+
+					<br>
+	
+					<p>You already have 5 projects. Please delete some of your projects to upload more.</p> 
+
+					<br>
+
+
+					<a href="{% url 'projects' %}" class="btn btn-match btn-lg"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> My Projects</a>
+
+					<br>
+					<br>
+
+
+				</div><!-- Project Content End -->
+
+
+			</div><!-- Panel-Body End -->
+		  
+		</div><!-- Panel End -->
+
+	</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+
+{% endblock %}
+

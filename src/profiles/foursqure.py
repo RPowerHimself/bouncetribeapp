@@ -1,0 +1,4 @@
+
+
+url = 'GET /v2/venues/search?oauth_token=I24IBAQV3ZZNYTAGIZXHNFGROQD2V1O0BKPR045B3FBJ1FMR&v=20131016&intent=checkin HTTP/1.1'
+

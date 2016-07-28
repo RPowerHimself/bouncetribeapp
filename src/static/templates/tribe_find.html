@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load friendshiptags %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+	<!-- Panel -->
+
+	<div class="panel panel-default">
+		  
+
+	<!-- Panel Body -->
+
+		<div class="panel-body">
+
+			
+			<div class="tribe-container">
+
+
+
+
+
+
+
+				<div class="tribe-search">
+
+					<div class="row">
+
+						<div class='col-sm-6 col-md-6 col-md-offset-3'>
+
+							<br>
+							<br>
+							
+							<div class="new-project"> Add Friends</div>
+
+
+
+
+
+								<form method="GET" action="">
+
+
+									<div class="input-group">
+
+										<div class="input-group-addon">
+
+											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+										</div>
+
+										
+										<input type='text' class="form-control" name='q' placeholder="Enter Your Friend's Username" value='{{ request.GET.q }}'>
+
+									</div>
+
+
+									<br>
+
+									<input class='btn btn-match btn-md' type='submit' value='Find Friend'/>
+
+
+								</form>
+
+							</div><!-- Col End End -->
+
+						</div><!-- Row End End -->
+
+					</div><!-- Tribe Search End -->
+
+
+
+{% if show_results == True %}
+
+<div class="tribe-results">
+
+<div class="row">
+
+{% for profile in qs %}
+
+<div class='col-sm-6 col-md-6 col-md-offset-3'>
+
+{% if profile.get_thumbnail %}
+
+<a href="{{ profile.get_absolute_url }}"><img src='{{ profile.get_thumbnail }}' class='img-responsive img-circle results-img' /></a>
+
+{% else %}
+<a href="{{ profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='img-responsive img-circle results-img' /></a>
+				
+{% endif %}
+
+<h4><a href="{{ profile.get_absolute_url }}">{{ profile.name }}</a></h4>
+
+{% if profile.location %}
+
+<p>{{ profile.location }}</p>
+
+{% endif %}
+
+<br>
+
+</div><!-- Col End -->
+
+{% endfor %}
+
+</div><!-- Row End -->
+
+</div><!-- Tribe Results End -->
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><!-- Friends-Content End -->
+
+</div><!-- Row End End -->
+
+
+</div><!-- Panel Body End -->
+		  
+</div><!-- Panel End -->
+
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}
+

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row">
+
+
+
+
+
+
+
+<div class="tribe-project-container">
+
+<div class="col-xs-12 col-sm-8 col-md-8 col-md-offset-2">
+
+<div class="panel panel-default">
+		  
+<div class="panel-body">
+
+
+<div class="tribe-project-content">
+
+{% if user.profile.get_thumbnail %}
+
+<div class="tribe-project-user">
+
+<a href="{{ project.user.profile.get_absolute_url }}">
+<img src='{{ project.user.profile.get_thumbnail }}' class='tribe-profile-img img-circle'> {{ project.user }}</div></a>
+
+
+{% else %}
+
+<div class="tribe-project-user">
+
+<a href="{{ project.user.profile.get_absolute_url }}"><img src ='{% static "img/avatar_default.jpg" %}' class ='tribe-profile-img img-circle' />{{ project.user }}</a></div>
+				
+{% endif %}
+
+
+
+<div class="tribe-project-timesince"><i class="fa fa-clock-o"></i> {{ project.audio_project_timesince }} ago</div>
+
+
+<hr>
+
+
+<div class="project-title"><a href="{{ project.get_absolute_url }}"><img src ='{% static "img/audioproject_icon50.png" %}' height="40px"/> "{{ project.title }}"</a></div>
+
+<br>
+
+{% if project.audio_file %}
+
+<audio id="player" src="{{ project.audio_file.url }}" type="audio/mp3" controls="controls"></audio>
+
+{% endif %}
+
+<br>
+<br>
+
+<div>{{ project.short_description }}</div>
+
+<br>
+
+{% if project.incomplete == True %}
+
+<div class="tribe-project-incomplete"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Work In Progress</div>
+
+{% endif %}
+
+<br>
+
+<hr>
+
+
+{% for comment in comments %}
+
+
+<div class="tribe-comment-content">
+
+
+
+{% if comment.user.profile.get_thumbnail %}
+
+<div class="tribe-comment-user"><a href="{{ comment.user.profile.get_absolute_url }}">
+
+<img src='{{ comment.user.profile.get_thumbnail }}' class='comment-profile-img img-circle'> {{ comment.user }}</a></div>
+
+{% else %}
+
+<div class="tribe-comment-user"><a href="{{ comment.user.profile.get_absolute_url }}">
+
+<img src='{% static "img/avatar_default.jpg" %}' class='comment-profile-img img-circle'> {{ comment.user }}</a></div>
+
+				
+{% endif %}
+
+
+
+
+
+
+<div class="tribe-comment-timesince"><i class="fa fa-clock-o"></i> {{ comment.comment_timesince }} ago</div>
+
+<br>
+<br>
+
+<div><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #777777; padding: 5px;"></span> {{ comment.positive_feedback }}</div>
+
+<br>
+
+<div><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #777777; padding: 5px;"></span> {{ comment.negative_feedback }}</div>
+
+</div><!-- Tribe-Comment-End -->
+
+<hr>
+
+{% endfor %}
+
+
+<br>
+
+
+{% if project.user != request.user%}
+<form method='POST' action'' enctype="multipart/form-data">{% csrf_token %}
+
+
+{{ form|crispy }}
+<br/>
+
+<input class='btn btn-success btn-lg' type='submit' value='Give Feedback' />
+
+</form>
+{% endif %}
+
+
+</div><!-- Tribe-Project-End -->
+
+</div><!-- Panel-Body End -->
+		  
+</div><!-- Panel End -->
+
+</div><!-- Col End -->
+
+</div><!-- Tribe-Project-Container-End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><!-- Row End -->
+
+{% endblock %}

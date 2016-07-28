@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+
+
+
+{% block content%}
+
+
+<div class="row">
+
+
+	<div class="col-xs-12 col-sm-12 col-md-12">
+
+
+		<div class="panel panel-default">
+		  
+			<div class="panel-body">
+
+
+				<div class='col-sm-10 col-md-10 col-md-offset-1'>
+
+
+
+					{% if not projects %}
+
+						<div class="no-matches">
+			
+							<p>Upload your music to start meeting people.</p>
+							<a href="{% url 'new_match_project' %}" class="btn btn-match btn-lg"><i class="fa fa-cloud-upload"></i> Upload Project</a>
+			
+						</div>
+
+					{% endif %}
+
+
+
+
+					<div class="projects-content">
+
+
+						<!-- Matched Projects -->
+
+						{% if projects %}
+
+							<!-- <div class="projects-header">
+
+								<h2><span class="glyphicon glyphicon-file" aria-hidden="true"></span> My Projects</h2>
+
+							</div> -->
+
+
+							<div class="table-responsive hidden-xs">
+
+								<table class="table table-hover" >
+
+
+									{% for project in projects %}
+
+										<tr>
+											<td style="vertical-align: middle;"><a href="{{project.get_absolute_url}}"><img src='{% static "img/project-icon-3.png" %}' class="project-list-icon"/></a></td>
+
+											<td class="projects-list-title" style="vertical-align: middle;"><a href="{{project.get_absolute_url}}">{{ project }}</a></td>
+
+											<td class="projects-list-timesince" style="text-align: center; vertical-align: middle;">{{ project.project_timesince }} ago</td>
+											<!-- <td class="hidden-xs" style="text-align: center; vertical-align: middle;">
+
+												{% if project.queued = True %}
+													<i class="fa fa-clock-o"></i>
+
+												{% else %}
+
+												{% endif %}
+
+											</td> -->
+
+										</tr>
+
+									{% endfor %}
+
+								</table>
+
+							</div><!-- End Table Responsive -->
+
+
+
+
+							<!-- MOBILE XS VIEW -->
+
+							<div class="row visible-xs">
+
+								{% for project in projects %}
+
+									<div class="projects-item">
+
+										<div class="col-md-1">
+
+											<a href="{{project.get_absolute_url}}"><img src='{% static "img/project-icon-3.png" %}' class="project-list-icon" />
+
+										</div><!-- End Col -->
+
+
+										<div class="col-md-11">
+
+										<div class="projects-list-title"><a href="{{project.get_absolute_url}}">{{ project.title }}</a></div>
+
+										<div class="projects-list-timesince">{{ project.project_timesince }} ago</div>
+
+
+										
+
+										<hr>
+
+										</div><!-- End Col -->
+
+
+									</div><!-- End Project Item -->
+
+								{% endfor %}
+
+							</div><!-- End Row -->
+
+							<!-- END MOBILE XS VIEW -->
+
+
+
+
+
+						{% endif %}
+
+
+					</div><!-- Project-Content End -->
+
+
+
+				</div><!-- Col End -->
+
+
+
+
+
+
+			</div><!-- Panel-Body End -->
+		  
+		</div><!-- Panel End -->
+
+	</div><!-- Col End -->
+
+</div><!-- Row End -->
+
+
+
+{% endblock %}
